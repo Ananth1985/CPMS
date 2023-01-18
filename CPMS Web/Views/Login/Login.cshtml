@@ -4,38 +4,60 @@
     ViewData["Title"] = "Login";
 }
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#LoginForm').submit(function (e) {
+            e.preventDefault();
+            var data = { Email: $('#EmailAddress').val().trim(), Password: $('#Password').val().trim() };
+            $.ajax({
+                url: apiurl,
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    alert('successfully received data ');
+                    console.log(result);
+                },
+                error: function () {
+                    alert('failed to receive the data');
+                    console.log('failed ');
+                }
+            })
+        })
+    })
+</script>
 <h1>Login</h1>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Login">
+        <form id="LoginForm" name="LoginForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="EmailAddress" class="control-label"></label>
-                <input asp-for="EmailAddress" class="form-control" />
+                <input asp-for="EmailAddress" class="form-control" id="EmailAddress" />
                 <span asp-validation-for="EmailAddress" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" type="password" />
+                <input asp-for="Password" class="form-control" type="password" id="Password" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 College: <input id="category" type="radio" name="category" title="College" value="College" />
                 Company: <input id="category" type="radio" name="category" title="Company" value="Company" />
                 <span asp-validation-for="Type" class="text-danger"></span>
-            </div>           
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+            <div class="form-group" style="padding-top:15px;">
+                <input type="submit" value="Create" class="btn btn-primary" onclick="" />
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

@@ -4,7 +4,7 @@ namespace CPMS_Web.Controllers.Company
 {
     public class CompanyController : Controller
     {
-        public IActionResult Index()
+        public IActionResult CompanyCreation()
         {
             return View();
         }
