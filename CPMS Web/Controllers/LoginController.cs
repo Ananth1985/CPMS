@@ -4,18 +4,23 @@ using System.Diagnostics;
 
 namespace CPMS_Web.Controllers
 {
-    public class HomeController : Controller
+    public class LoginController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<LoginController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public LoginController(ILogger<LoginController> logger)
         {
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Login()
         {
-            return View();
+            return View("Login");
+        }
+
+        public IActionResult Submit(Login objLogin)
+        {
+            return View("Login");
         }
 
         public IActionResult Privacy()
