@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using CPMS.Contracts.Models;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -21,14 +22,15 @@ namespace CPMS.Data.Repositories
                      .Build();
             _connectionString = config.GetConnectionString("TechathonConnectionStrings");
         }
-        public string GetLoginDetails(string email, string password)
+        public string GetLoginDetails(Login loginDetails)
         {
             using var sqlConnection = new SqlConnection(_connectionString);
             sqlConnection.Open();
             using var command = new SqlCommand("GetLoginDetails", sqlConnection);
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.AddWithValue("email", email);
-            command.Parameters.AddWithValue("password", password);
+            command.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = loginDetails.Email;
+            command.Parameters.Add("@Password", SqlDbType.VarChar, 50).Value = loginDetails.Password;
+            command.Parameters.AddWithValue("@Type", SqlDbType.Int).Value = loginDetails.Type;
             command.ExecuteScalar();
             DataSet ds = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter(command);

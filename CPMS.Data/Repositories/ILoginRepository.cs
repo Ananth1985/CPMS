@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CPMS.Contracts.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace CPMS.Data.Repositories
 {
     public interface ILoginRepository
     {
-        public string GetLoginDetails(string email, string password);
+        public string GetLoginDetails(Login loginDetails);
     }
 }
