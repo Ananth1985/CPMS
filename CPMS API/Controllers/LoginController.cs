@@ -18,6 +18,7 @@ namespace CPMS_API.Controllers
         }
 
         [HttpPost]
+        [Route("GetLoginDetails")]
         public string GetLoginDetails([FromBody] Login loginDetails)
         {
             return _iLoginService.GetLoginDetails(loginDetails);
