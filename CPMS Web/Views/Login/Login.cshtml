@@ -3,8 +3,9 @@
 @{
     ViewData["Title"] = "Login";
 }
-
+@Html.Hidden("RedirectTo", Url.Action("CompanyCreation", "Company"));
 <script type="text/javascript">
+    var url = $("#RedirectTo").val();
     $(document).ready(function () {
         $('#LoginForm').submit(function (e) {
             e.preventDefault();
@@ -17,10 +18,12 @@
                 success: function (result) {
                     alert('successfully received data ');
                     console.log(result);
+                    location.href = url;
                 },
                 error: function () {
                     alert('failed to receive the data');
                     console.log('failed ');
+                    location.href = url;
                 }
             })
         })
