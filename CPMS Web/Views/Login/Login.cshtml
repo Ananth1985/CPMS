@@ -6,15 +6,16 @@
 @Html.Hidden("RedirectTo", Url.Action("CompanyCreation", "Company"));
 <script type="text/javascript">
     var url = $("#RedirectTo").val();
+    var apiurl = 'https://localhost:7128/api/Login';
     $(document).ready(function () {
         $('#LoginForm').submit(function (e) {
             e.preventDefault();
-            var data = { Email: $('#EmailAddress').val().trim(), Password: $('#Password').val().trim() };
+            var requestdata = { Email: $('#EmailAddress').val().trim(), Password: $('#Password').val().trim() };
             $.ajax({
                 url: apiurl,
-                type: 'post',
-                dataType: 'json',
-                data: data,
+                contentType: 'application/json; charset=utf-8',
+                type: 'Post',
+                data: JSON.stringify(requestdata),
                 success: function (result) {
                     alert('successfully received data ');
                     console.log(result);

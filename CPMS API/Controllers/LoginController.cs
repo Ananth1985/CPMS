@@ -1,6 +1,8 @@
-﻿using CPMS.Service.Services;
+﻿using CPMS.Contracts.Models;
+using CPMS.Service.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Web.Http.Cors;
 
 namespace CPMS_API.Controllers
 {
@@ -15,10 +17,11 @@ namespace CPMS_API.Controllers
             _iLoginService = iLoginService;
         }
 
-        [HttpGet]
-        public string GetLoginDetails(string email, string password)
+        [HttpPost]
+        public string GetLoginDetails([FromBody] Login loginDetails)
         {
-            return _iLoginService.GetLoginDetails(email, password);
+
+            return _iLoginService.GetLoginDetails(loginDetails.Email, loginDetails.Password);
         }
     }
 }
