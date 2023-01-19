@@ -20,8 +20,7 @@ namespace CPMS_API.Controllers
         [HttpPost]
         public string GetLoginDetails([FromBody] Login loginDetails)
         {
-
-            return _iLoginService.GetLoginDetails(loginDetails.Email, loginDetails.Password);
+            return _iLoginService.GetLoginDetails(loginDetails);
         }
     }
 }

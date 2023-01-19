@@ -1,4 +1,5 @@
-﻿using CPMS.Data.Repositories;
+﻿using CPMS.Contracts.Models;
+using CPMS.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,9 @@ namespace CPMS.Service.Services
             _loginRepository = loginRepository;
         }
 
-        public string GetLoginDetails(string email, string password)
+        public string GetLoginDetails(Login loginDetails)
         {
-            return _loginRepository.GetLoginDetails(email, password);
+            return _loginRepository.GetLoginDetails(loginDetails);
         }
     }
 }
