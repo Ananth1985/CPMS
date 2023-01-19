@@ -10,5 +10,9 @@ namespace CPMS.Data.Repositories
     public interface ILoginRepository
     {
         public string GetLoginDetails(Login loginDetails);
+
+        public string GetTypeDetails(int TypeId);
+
+
     }
 }

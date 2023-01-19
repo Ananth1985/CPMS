@@ -10,5 +10,8 @@ namespace CPMS.Service.Services
     public interface ILoginService
     {
         public string GetLoginDetails(Login loginDetails);
+
+        public string GetTypeDetails(int typeId);
+
     }
 }

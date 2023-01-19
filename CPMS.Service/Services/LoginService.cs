@@ -20,5 +20,10 @@ namespace CPMS.Service.Services
         {
             return _loginRepository.GetLoginDetails(loginDetails);
         }
+
+        public string GetTypeDetails(int typeId)
+        {
+            return _loginRepository.GetTypeDetails(typeId);
+        }
     }
 }

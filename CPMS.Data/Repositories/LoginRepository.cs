@@ -40,5 +40,28 @@ namespace CPMS.Data.Repositories
             JSONresult = JsonConvert.SerializeObject(ds);
             return JSONresult;
         }
+
+        
+
+
+        public string GetTypeDetails(int TypeId)
+        {
+            using var sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+            using var command = new SqlCommand("GetTypeDetails", sqlConnection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@Id", SqlDbType.VarChar, 50).Value = TypeId;
+            command.ExecuteScalar();
+            DataSet ds = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            adapter.Fill(ds, "TypeDetails");
+            sqlConnection.Close();
+            string JSONresult;
+            JSONresult = JsonConvert.SerializeObject(ds);
+            return JSONresult;
+        }
+
+       
+
     }
 }
