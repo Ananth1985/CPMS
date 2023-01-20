@@ -1,0 +1,107 @@
+﻿@model CPMS.Web.Models.College
+
+@{
+    ViewData["Title"] = "College";
+}
+
+<h1>College Registration</h1>
+<hr />
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#CollegeForm').submit(function (e) {
+            e.preventDefault();
+            var data = {
+                CompanyName: $('#CollegeName').val().trim(),
+                Email: $('#Email').val().trim(),
+                PhoneNumber: $('#PhoneNumber').val().trim(),
+                Fax: $('#FaxNumber').val().trim(),
+                Address: $('#Address').val().trim(),
+                State: $('#State').val().trim(),
+                City: $('#City').val().trim(),
+                Country: $('#Country').val().trim(),
+                Pincode: $('#Pincode').val().trim(),
+            };
+            alert(data);
+            $.ajax({
+                url: apiurl,
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    alert('successfully received data ');
+                    console.log(result);
+                },
+                error: function () {
+                    alert('failed to receive the data');
+                    console.log('failed ');
+                }
+            })
+        })
+    })
+</script>
+<div class="row">
+    <div class="col-md-4">
+        <form id="CollegeForm" name="CollegeForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group" hidden>
+                <label asp-for="Id" class="control-label"></label>
+                <input asp-for="Id" class="form-control" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CollegeName" class="control-label"></label>
+                <input asp-for="CollegeName" class="form-control" id="CollegeName" />
+                <span asp-validation-for="CollegeName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" id="Email" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" id="PhoneNumber" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FaxNumber" class="control-label"></label>
+                <input asp-for="FaxNumber" class="form-control" id="FaxNumber" />
+                <span asp-validation-for="FaxNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Address" class="control-label"></label>
+                <input asp-for="Address" class="form-control" id="Address" />
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <input asp-for="State" class="form-control" id="State" />
+                <span asp-validation-for="State" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" id="City" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Country" class="control-label"></label>
+                <input asp-for="Country" class="form-control" id="Country" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Pincode" class="control-label"></label>
+                <input asp-for="Pincode" class="form-control" id="Pincode" />
+                <span asp-validation-for="Pincode" class="text-danger"></span>
+            </div>
+            <div class="form-group" style="padding-top:15px;">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
