@@ -6,17 +6,26 @@ using System.Threading.Tasks;
 
 namespace CPMS.Contracts.Models
 {
-    public class College
+    public class Student
     {
-        public int CollegeId { get; set; }
-        
-        public string CollegeName { get; set; }
+        public int StudentId { get; set; }
 
+        public int CollegeId { get; set; }
+
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
+        
+        public int GenderId { get; set; }
+       
         public string Email { get; set; }
 
-        public string PhoneNumber { get; set; }
+        public decimal CGPA { get; set; }
+        public int NoofArrears { get; set; }
 
-        public string Fax { get; set; }
+        public int DepartmentId { get; set; }
+
+        public string PhoneNumber { get; set; }
 
         public string Address { get; set; }
 

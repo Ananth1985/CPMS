@@ -8,9 +8,9 @@ namespace CPMS.Contracts.Models
 {
     public class Company
     {
-        public int Id { get; set; }
+        public int CompanyId { get; set; }
         
-        public int LoginId { get; set; }
+        public int? LoginId { get; set; }
 
         public string CompanyName { get; set; }
 
@@ -32,10 +32,10 @@ namespace CPMS.Contracts.Models
 
         public int CreatedBy { get; set; }
 
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
 
-        public int ModifiedBy { get; set; }
+        public int? ModifiedBy { get; set; }
 
-        public DateTime ModifiedDate { get; set; }
+        public DateTime? ModifiedDate { get; set; }
     }
 }

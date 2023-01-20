@@ -30,7 +30,7 @@ namespace CPMS.Data.Repositories
             command.CommandType = CommandType.StoredProcedure;
             command.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = loginDetails.Email;
             command.Parameters.Add("@Password", SqlDbType.VarChar, 50).Value = loginDetails.Password;
-            command.Parameters.AddWithValue("@Type", SqlDbType.Int).Value = loginDetails.Type;
+            command.Parameters.Add("@TypeId", SqlDbType.Int).Value = loginDetails.Type;
             command.ExecuteScalar();
             DataSet ds = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter(command);
