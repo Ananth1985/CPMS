@@ -21,13 +21,13 @@ namespace CPMS.Data.Repositories
             _connectionString = config.GetConnectionString("TechathonConnectionStrings");
         }
 
-        public string GetCompanyDetails(int companyId)
+        public string GetCompanyDetails(int? companyId)
         {
             using var sqlConnection = new SqlConnection(_connectionString);
             sqlConnection.Open();
             using var command = new SqlCommand("GetCompanyDetails", sqlConnection);
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.Add("@Id", SqlDbType.VarChar, 50).Value = companyId;
+            command.Parameters.Add("@CompanyId", SqlDbType.Int).Value = companyId;
             command.ExecuteScalar();
             DataSet ds = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter(command);

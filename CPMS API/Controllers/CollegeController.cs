@@ -17,28 +17,28 @@ namespace CPMS_API.Controllers
             _collegeService = collegeService;
         }
          
-        [HttpPost]
+        [HttpGet]
         [Route("GetCollegeDetails")]
-        public string GetCollegeDetails(int collegeId)
+        public string GetCollegeDetails(int? collegeId = null)
         {
             return _collegeService.GetCollegeDetails(collegeId);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("GetStudentDetails")]
-        public string GetStudentDetails(int studentId)
+        public string GetStudentDetails(int? studentId = null)
         {
             return _collegeService.GetStudentDetails(studentId);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("GetDepartmentDetails")]
         public string GetDepartmentDetails(int departmentId)
         {
             return _collegeService.GetDepartmentDetails(departmentId);
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("GetAllDepartmentByCollegeId")]
         public string GetAllDepartmentByCollegeId(int collegeId)
         {

@@ -8,6 +8,6 @@ namespace CPMS.Service.Services
 {
     public interface ICompanyService
     {
-        public string GetCompanyDetails(int CompanyId);
+        public string GetCompanyDetails(int? CompanyId);
     }
 }

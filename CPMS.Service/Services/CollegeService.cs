@@ -15,17 +15,17 @@ namespace CPMS.Service.Services
             _collegeRepository = collegeRepository;
         }
 
-        public string GetCollegeDetails(int collegeId)
+        public string GetCollegeDetails(int? collegeId)
         {
             return _collegeRepository.GetCollegeDetails(collegeId);
         }
 
-        public string GetStudentDetails(int studentId)
+        public string GetStudentDetails(int? studentId)
         {
             return _collegeRepository.GetStudentDetails(studentId);
         }
 
-        public string GetDepartmentDetails(int departmentId)
+        public string GetDepartmentDetails(int? departmentId)
         {
             return _collegeRepository.GetDepartmentDetails(departmentId);
         }

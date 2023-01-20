@@ -8,11 +8,11 @@ namespace CPMS.Service.Services
 {
     public interface ICollegeService
     {
-        public string GetCollegeDetails(int collegeId);
+        public string GetCollegeDetails(int? collegeId);
 
-        public string GetStudentDetails(int studentId);
+        public string GetStudentDetails(int? studentId);
 
-        public string GetDepartmentDetails(int departmentId);
+        public string GetDepartmentDetails(int? departmentId);
 
         public string GetAllDepartmentByCollegeId(int collegeId);
     }
