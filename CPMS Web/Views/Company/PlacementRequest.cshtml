@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page Design Using HTML & CSS</title>
+</head>
+<script type="text/javascript">
+    var apiurl = 'https://localhost:7128/api/Login';
+    $(document).ready(function () {
+
+        $.ajax({
+            url: apiurl,
+            contentType: 'application/json; charset=utf-8',
+            type: 'Post',
+            data: JSON.stringify(requestdata),
+            success: function (result) {
+                alert('successfully received data ');
+                console.log(result);
+                location.href = $("#CompanyURL").val();
+            },
+            error: function () {
+                alert('failed to receive the data');
+                console.log('failed ');
+                location.href = url;
+            }
+        })
+        
+    })
+</script>
+<body>
+    <div class="container">
+        <div class="header">
+            <nav>
+                <ul>
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Products</a></li>
+                    <li><a href="">Community</a></li>
+                    <li><a href="">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <form id="CompanyForm" name="CompanyForm">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label class="control-label">College Name</label>
+                        <input class="form-control" id="CompEmailAddress" />
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="">
+                        <label class="control-label">College Name</label>
+                        <select id="multiple-checkboxes" multiple="multiple">
+                            <option value="php">PHP</option>
+                            <option value="javascript">JavaScript</option>
+                            <option value="java">Java</option>
+                            <option value="sql">SQL</option>
+                            <option value="jquery">Jquery</option>
+                            <option value=".net">.Net</option>
+                        </select>
+                        <span class="text-danger"></span>
+                    </div>
+                    <div class="form-group" style="padding-top:15px;">
+                        <button class="btn" id="CompSignIn">Sign In</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        </div>
+    
+</body>
+</html>

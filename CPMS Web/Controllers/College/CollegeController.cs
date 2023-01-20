@@ -8,5 +8,10 @@ namespace CPMS_Web.Controllers.College
         {
             return View();
         }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
     }
 }

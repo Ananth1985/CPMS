@@ -8,5 +8,10 @@ namespace CPMS_Web.Controllers.Company
         {
             return View();
         }
+
+        public IActionResult PlacementRequest()
+        {
+            return View();
+        }
     }
 }
