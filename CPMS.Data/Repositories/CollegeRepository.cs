@@ -26,7 +26,7 @@ namespace CPMS.Data.Repositories
             sqlConnection.Open();
             using var command = new SqlCommand("GetCollegeDetails", sqlConnection);
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.Add("@Id", SqlDbType.VarChar, 50).Value = collegeId;
+            command.Parameters.Add("@Id", SqlDbType.Int).Value = collegeId;
             command.ExecuteScalar();
             DataSet ds = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -43,7 +43,7 @@ namespace CPMS.Data.Repositories
             sqlConnection.Open();
             using var command = new SqlCommand("GetStudentDetails", sqlConnection);
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.Add("@Id", SqlDbType.VarChar, 50).Value = studentId;
+            command.Parameters.Add("@Id", SqlDbType.Int).Value = studentId;
             command.ExecuteScalar();
             DataSet ds = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -60,7 +60,24 @@ namespace CPMS.Data.Repositories
             sqlConnection.Open();
             using var command = new SqlCommand("GetDepartmentDetails", sqlConnection);
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.Add("@Id", SqlDbType.VarChar, 50).Value = departmentId;
+            command.Parameters.Add("@Id", SqlDbType.Int).Value = departmentId;
+            command.ExecuteScalar();
+            DataSet ds = new DataSet();
+            SqlDataAdapter adapter = new SqlDataAdapter(command);
+            adapter.Fill(ds, "DepartmentDetails");
+            sqlConnection.Close();
+            string JSONresult;
+            JSONresult = JsonConvert.SerializeObject(ds);
+            return JSONresult;
+        }
+
+        public string GetAllDepartmentByCollegeId(int collegeId)
+        {
+            using var sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+            using var command = new SqlCommand("GetAllDepartmentByCollegeId", sqlConnection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@CollegeId", SqlDbType.Int).Value = collegeId;
             command.ExecuteScalar();
             DataSet ds = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter(command);

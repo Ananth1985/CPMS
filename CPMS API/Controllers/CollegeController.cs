@@ -37,5 +37,12 @@ namespace CPMS_API.Controllers
         {
             return _collegeService.GetDepartmentDetails(departmentId);
         }
+
+        [HttpPost]
+        [Route("GetAllDepartmentByCollegeId")]
+        public string GetAllDepartmentByCollegeId(int collegeId)
+        {
+            return _collegeService.GetAllDepartmentByCollegeId(collegeId);
+        }
     }
 }
