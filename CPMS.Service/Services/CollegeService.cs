@@ -29,5 +29,10 @@ namespace CPMS.Service.Services
         {
             return _collegeRepository.GetDepartmentDetails(departmentId);
         }
+
+        public string GetAllDepartmentByCollegeId(int collegeId)
+        {
+            return _collegeRepository.GetAllDepartmentByCollegeId(collegeId);
+        }
     }
 }
