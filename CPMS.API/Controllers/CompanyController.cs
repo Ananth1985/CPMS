@@ -17,9 +17,9 @@ namespace CPMS.API.Controllers
             _companyService = companyService;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("GetCompanyDetails")]
-        public string GetCompanyDetails(int companyId)
+        public string GetCompanyDetails(int? companyId = null)
         {
             return _companyService.GetCompanyDetails(companyId);
         }

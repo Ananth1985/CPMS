@@ -16,7 +16,7 @@ namespace CPMS.Service.Services
         }
 
 
-        public string GetCompanyDetails(int companyId)
+        public string GetCompanyDetails(int? companyId)
         {
             return _companyRepository.GetCompanyDetails(companyId);
         }

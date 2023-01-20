@@ -8,6 +8,6 @@ namespace CPMS.Data.Repositories
 {
     public interface ICompanyRepository
     {
-        public string GetCompanyDetails(int companyId);
+        public string GetCompanyDetails(int? companyId);
     }
 }

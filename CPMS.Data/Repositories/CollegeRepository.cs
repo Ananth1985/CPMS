@@ -20,13 +20,13 @@ namespace CPMS.Data.Repositories
                      .Build();
             _connectionString = config.GetConnectionString("TechathonConnectionStrings");
         }
-        public string GetCollegeDetails(int collegeId)
+        public string GetCollegeDetails(int? collegeId)
         {
             using var sqlConnection = new SqlConnection(_connectionString);
             sqlConnection.Open();
             using var command = new SqlCommand("GetCollegeDetails", sqlConnection);
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.Add("@Id", SqlDbType.Int).Value = collegeId;
+            command.Parameters.Add("@CollegeId", SqlDbType.Int).Value = collegeId;
             command.ExecuteScalar();
             DataSet ds = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -37,13 +37,13 @@ namespace CPMS.Data.Repositories
             return JSONresult;
         }
 
-        public string GetStudentDetails(int studentId)
+        public string GetStudentDetails(int? studentId)
         {
             using var sqlConnection = new SqlConnection(_connectionString);
             sqlConnection.Open();
             using var command = new SqlCommand("GetStudentDetails", sqlConnection);
             command.CommandType = CommandType.StoredProcedure;
-            command.Parameters.Add("@Id", SqlDbType.Int).Value = studentId;
+            command.Parameters.Add("@StudentId", SqlDbType.Int).Value = studentId;
             command.ExecuteScalar();
             DataSet ds = new DataSet();
             SqlDataAdapter adapter = new SqlDataAdapter(command);
@@ -54,7 +54,7 @@ namespace CPMS.Data.Repositories
             return JSONresult;
         }
 
-        public string GetDepartmentDetails(int departmentId)
+        public string GetDepartmentDetails(int? departmentId)
         {
             using var sqlConnection = new SqlConnection(_connectionString);
             sqlConnection.Open();
