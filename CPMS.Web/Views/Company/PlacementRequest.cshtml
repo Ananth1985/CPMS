@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "PlacementRequest";
+}
+
+
+<script type="text/javascript">
+    var apiurl = 'https://localhost:7128/api/Login';
+    $(document).ready(function () {
+        $('#CompEmailAddress').val('');
+        $('#CompPassword').val('');
+        $('#CollEmailAddress').val('');
+        $('#CollPassword').val('');
+        $('#CompanyForm').submit(function (e) {
+            e.preventDefault();
+            var requestdata = { Email: $('#CompEmailAddress').val().trim(), Password: $('#CompPassword').val().trim(), Type: 2 };
+            $.ajax({
+                url: apiurl,
+                contentType: 'application/json; charset=utf-8',
+                type: 'Post',
+                data: JSON.stringify(requestdata),
+                success: function (result) {
+                    alert('successfully received data ');
+                    console.log(result);
+                    location.href = $("#CompanyURL").val();
+                },
+                error: function () {
+                    alert('failed to receive the data');
+                    console.log('failed ');
+                    location.href = url;
+                }
+            })
+        })
+
+        $('#CollegeForm').submit(function (e) {
+            e.preventDefault();
+            var requestdata = { Email: $('#CollEmailAddress').val().trim(), Password: $('#CollPassword').val().trim(), Type: 1 };
+            $.ajax({
+                url: apiurl,
+                contentType: 'application/json; charset=utf-8',
+                type: 'Post',
+                data: JSON.stringify(requestdata),
+                success: function (result) {
+                    alert('successfully received data ');
+                    console.log(result);
+                    location.href = $("#CollegeURL").val();
+                },
+                error: function () {
+                    alert('failed to receive the data');
+                    console.log('failed ');
+                    location.href = url;
+                }
+            })
+        })
+
+        $(".tab-nav-wrapper li.active").click();
+        $($(".tab-nav-wrapper li.active a").attr("href")).show();
+
+        $(".tab-nav-wrapper li").click(function (e) {
+            $('#CollEmailAddress').val('');
+            $('#CollPassword').val('');
+            $('#CompEmailAddress').val('');
+            $('#CompPassword').val('');
+            e.preventDefault();
+            e.stopPropagation();
+
+            $(".tab-nav-wrapper li").removeClass("active");
+            $(this).addClass("active");
+
+            var target = $(this).find("a").attr("href");
+            $(".tab-content-wrapper").find(".tab-content").hide();
+            $(".tab-content-wrapper").find(target).show();
+        })
+    })
+</script>
+<h1>Login</h1>
+<hr />
+
+
+
+<div class="row">
+    <div class="col-md-4">
+        <form id="CompanyForm" name="CompanyForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label class="control-label">College Name</label>
+                <input class="form-control" id="CompEmailAddress" />
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Departments</label>
+                <select id="chkveg" multiple="multiple">
+                    <option value="cheese">Cheese</option>
+                    <option value="tomatoes">Tomatoes</option>
+                    <option value="mozarella">Mozzarella</option>
+                    <option value="mushrooms">Mushrooms</option>
+                    <option value="pepperoni">Pepperoni</option>
+                    <option value="onions">Onions</option>
+                </select>
+                <span class="text-danger"></span>
+            </div>
+            <div class="form-group" style="padding-top:15px;">
+                <input type="submit" value="Sign In" class="btn btn-primary" onclick="" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
