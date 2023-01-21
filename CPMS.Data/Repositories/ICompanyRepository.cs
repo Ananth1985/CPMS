@@ -12,5 +12,7 @@ namespace CPMS.Data.Repositories
         public string GetCompanyDetails(int? companyId);
 
         public string InsertPlacementRequest(PlacementRequest placementRequest);
+
+        public string InsertCompanyDetails(Company company);
     }
 }
