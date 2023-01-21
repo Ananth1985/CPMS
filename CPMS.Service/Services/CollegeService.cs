@@ -1,4 +1,5 @@
-﻿using CPMS.Data.Repositories;
+﻿using CPMS.Contracts.Models;
+using CPMS.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,5 +35,7 @@ namespace CPMS.Service.Services
         {
             return _collegeRepository.GetAllDepartmentByCollegeId(collegeId);
         }
+
+
     }
 }

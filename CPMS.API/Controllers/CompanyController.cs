@@ -23,5 +23,12 @@ namespace CPMS.API.Controllers
         {
             return _companyService.GetCompanyDetails(companyId);
         }
+
+        [HttpPost]
+        [Route("InsertPlacementRequest")]
+        public string InsertPlacementRequest(PlacementRequest placementRequest)
+        {
+            return _companyService.InsertPlacementRequest(placementRequest);
+        }
     }
 }

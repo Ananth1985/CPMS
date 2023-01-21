@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CPMS.Contracts.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,5 +16,7 @@ namespace CPMS.Service.Services
         public string GetDepartmentDetails(int? departmentId);
 
         public string GetAllDepartmentByCollegeId(int collegeId);
+
+      
     }
 }

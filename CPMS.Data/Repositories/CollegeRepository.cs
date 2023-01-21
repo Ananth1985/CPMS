@@ -52,6 +52,12 @@ namespace CPMS.Data.Repositories
                     colleges.Add(college);     
                 }               
             }
+            else
+            {
+                sqlConnection.Close();
+                var jsonErrorString = JsonConvert.SerializeObject("College Details Not Found.");
+                return jsonErrorString;
+            }
             sqlConnection.Close();
             var jsonString = JsonConvert.SerializeObject(colleges);
             return jsonString;
@@ -92,6 +98,12 @@ namespace CPMS.Data.Repositories
                     students.Add(student);
                 }
             }
+            else
+            {
+                sqlConnection.Close();
+                var jsonErrorString = JsonConvert.SerializeObject("Student Not Found.");
+                return jsonErrorString;
+            }
             sqlConnection.Close();
             var jsonString = JsonConvert.SerializeObject(students);
             return jsonString;
@@ -123,6 +135,12 @@ namespace CPMS.Data.Repositories
                     departments.Add(department);
                 }
             }
+            else
+            {
+                sqlConnection.Close();
+                var jsonErrorString = JsonConvert.SerializeObject("Department Not Found.");
+                return jsonErrorString;
+            }
             sqlConnection.Close();
             var jsonString = JsonConvert.SerializeObject(departments);
             return jsonString;
@@ -153,6 +171,12 @@ namespace CPMS.Data.Repositories
                     department.ModifiedDate = (reader["ModifiedDate"]) != DBNull.Value ? Convert.ToDateTime(reader["ModifiedDate"]) : null;
                     departments.Add(department);
                 }
+            }
+            else
+            {
+                sqlConnection.Close();
+                var jsonErrorString = JsonConvert.SerializeObject("Department Not Found based on the college.");
+                return jsonErrorString;
             }
             sqlConnection.Close();
             var jsonString = JsonConvert.SerializeObject(departments);
