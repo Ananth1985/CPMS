@@ -9,20 +9,29 @@ namespace CPMS.Contracts.Models
 {
     public class Login
     {
-        public int Id { get; set; }
+        public int LoginId { get; set; }
 
+        [Required]
         public string Email { get; set; }
-             
+
+        [Required]
         public string Password { get; set; }
+
+        [Required]
+        public int TypeId { get; set; }
+
+        public int ProfileId { get; set; }
+
+        public int? CreatedBy { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+
+        public int? ModifiedBy { get; set; }
+
+        public DateTime? ModifiedDate { get; set; }
+
+        public int IsActive { get; set; }
                 
-        public int Type { get; set; }       
-
-        public int CreatedBy { get; set; }
-
-        public DateTime CreatedDate { get; set; }
-
-        public int ModifiedBy { get; set; }
-
-        public DateTime ModifiedDate { get; set; }
+        public string? Description { get; set; }
     }
 }

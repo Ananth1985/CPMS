@@ -37,7 +37,6 @@ namespace CPMS.Data.Repositories
                 {
                     Company company = new Company();
                     company.CompanyId = Convert.ToInt32(reader["CompanyId"]);
-                    //company.LoginId = (reader["LoginId"]) != DBNull.Value ? Convert.ToInt32(reader["LoginId"]) : null; 
                     company.CompanyName = Convert.ToString(reader["CompanyName"]);
                     company.Email = Convert.ToString(reader["Email"]);
                     company.PhoneNumber = Convert.ToString(reader["PhoneNumber"]);
@@ -54,9 +53,61 @@ namespace CPMS.Data.Repositories
                     companys.Add(company);
                 }
             }
+            else
+            {
+                sqlConnection.Close();
+                var jsonErrorString = JsonConvert.SerializeObject("Company Details Not Found.");
+                return jsonErrorString;
+            }
             sqlConnection.Close();
             var jsonString = JsonConvert.SerializeObject(companys);
             return jsonString;
+        }
+
+        public string InsertPlacementRequest(PlacementRequest placementRequest)
+        {
+            try
+            {
+                using var sqlConnection = new SqlConnection(_connectionString);
+                sqlConnection.Open();
+                using var command = new SqlCommand("InsertPlacementRequest", sqlConnection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("@CollegeId", SqlDbType.Int).Value = placementRequest.CollegeId;
+                command.Parameters.Add("@CompanyId", SqlDbType.Int).Value = placementRequest.CompanyId;
+                command.Parameters.Add("@RequestedDate", SqlDbType.DateTime).Value = placementRequest.RequestedDate;
+                command.Parameters.Add("@CreatedBy", SqlDbType.Int).Value = placementRequest.CreatedBy;
+                command.Parameters.Add("@PlacementRequestId", SqlDbType.Int).Direction = ParameterDirection.Output;
+                command.ExecuteNonQuery();
+                int PlacementRequestId = Convert.ToInt32(command.Parameters["@PlacementRequestId"].Value);
+                sqlConnection.Close();
+                InsertPlacementRequestDetails(PlacementRequestId, placementRequest.DepartmentIds, placementRequest.Arrears, placementRequest.CGPA, placementRequest.CreatedBy);
+                var jsonString = JsonConvert.SerializeObject("Placement Request Inserted Successfully.");
+                return jsonString;
+            }
+            catch (Exception exp)
+            {
+                var jsonString = JsonConvert.SerializeObject(exp.Message);
+                return jsonString;
+            }
+        }
+
+        public void InsertPlacementRequestDetails(int PlacementRequestId, string departmentIds, int arrears, decimal CGPA, int createdBy)
+        {
+            using var sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+            string[] strArr = departmentIds.Split(',');       
+            for (int i = 0; i < strArr.Length; i++)
+            {
+                using var command = new SqlCommand("InsertPlacementRequestDetails", sqlConnection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("@PlacementRequestId", SqlDbType.Int).Value = PlacementRequestId;
+                command.Parameters.Add("@DepartmentId", SqlDbType.Int).Value = Convert.ToInt64(strArr[i]);
+                command.Parameters.Add("@Arrears", SqlDbType.Int).Value = arrears;
+                command.Parameters.Add("@CGPA", SqlDbType.Decimal).Value = CGPA;
+                command.Parameters.Add("@CreatedBy", SqlDbType.Int).Value = createdBy;
+                command.ExecuteNonQuery();
+            }
+            sqlConnection.Close();
         }
     }
 }
