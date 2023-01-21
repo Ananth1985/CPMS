@@ -17,6 +17,7 @@ namespace CPMS.Data.Repositories
 
         public string GetAllDepartmentByCollegeId(int collegeId);
 
-     
+        public string InsertCollegeDetails(College college);
+
     }
 }

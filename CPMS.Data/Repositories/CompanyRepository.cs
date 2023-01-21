@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CPMS.Contracts.Models;
+using System.Diagnostics.Metrics;
 
 namespace CPMS.Data.Repositories
 {
@@ -60,7 +61,7 @@ namespace CPMS.Data.Repositories
                 return jsonErrorString;
             }
             sqlConnection.Close();
-            var jsonString = JsonConvert.SerializeObject(companys);
+            var jsonString = JsonConvert.SerializeObject(companys, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             return jsonString;
         }
 
@@ -95,7 +96,7 @@ namespace CPMS.Data.Repositories
         {
             using var sqlConnection = new SqlConnection(_connectionString);
             sqlConnection.Open();
-            string[] strArr = departmentIds.Split(',');       
+            string[] strArr = departmentIds.Split(',');
             for (int i = 0; i < strArr.Length; i++)
             {
                 using var command = new SqlCommand("InsertPlacementRequestDetails", sqlConnection);
@@ -108,6 +109,38 @@ namespace CPMS.Data.Repositories
                 command.ExecuteNonQuery();
             }
             sqlConnection.Close();
+        }
+
+        public string InsertCompanyDetails(Company company)
+        {
+            try
+            {
+                using var sqlConnection = new SqlConnection(_connectionString);
+                sqlConnection.Open();
+                using var command = new SqlCommand("InsertCompanyDetails", sqlConnection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("@CompanyName", SqlDbType.VarChar).Value = company.CompanyName;
+                command.Parameters.Add("@Email", SqlDbType.VarChar).Value = company.Email;
+                command.Parameters.Add("@PhoneNumber", SqlDbType.VarChar).Value = company.PhoneNumber;
+                command.Parameters.Add("@Fax", SqlDbType.VarChar).Value = company.Fax;
+                command.Parameters.Add("@Address", SqlDbType.VarChar).Value = company.Address;
+                command.Parameters.Add("@State", SqlDbType.VarChar).Value = company.State;
+                command.Parameters.Add("@City", SqlDbType.VarChar).Value = company.City;
+                command.Parameters.Add("@Pincode", SqlDbType.NVarChar).Value = company.Pincode;
+                command.Parameters.Add("@Country", SqlDbType.VarChar).Value = company.Country;
+                command.Parameters.Add("@CreatedBy", SqlDbType.Int).Value = company.CreatedBy;
+                command.Parameters.Add("@CompanyId", SqlDbType.Int).Direction = ParameterDirection.Output;
+                command.ExecuteNonQuery();
+                int CompanyId = Convert.ToInt32(command.Parameters["@CompanyId"].Value);
+                sqlConnection.Close();
+                var jsonString = JsonConvert.SerializeObject("Company Details Inserted Successfully.");
+                return jsonString;
+            }
+            catch (Exception exp)
+            {
+                var jsonString = JsonConvert.SerializeObject(exp.Message);
+                return jsonString;
+            }
         }
     }
 }

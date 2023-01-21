@@ -58,7 +58,7 @@ namespace CPMS.Data.Repositories
                 return jsonString;
             }
             sqlConnection.Close();
-            jsonString = JsonConvert.SerializeObject(logins);
+            jsonString = JsonConvert.SerializeObject(logins, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             return jsonString;
         }
 

@@ -44,5 +44,12 @@ namespace CPMS.API.Controllers
         {
             return _collegeService.GetAllDepartmentByCollegeId(collegeId);
         }
+
+        [HttpPost]
+        [Route("InsertCollegeDetails")]
+        public string InsertCollegeDetails(College college)
+        {
+            return _collegeService.InsertCollegeDetails(college);
+        }
     }
 }

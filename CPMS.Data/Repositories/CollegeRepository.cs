@@ -59,7 +59,7 @@ namespace CPMS.Data.Repositories
                 return jsonErrorString;
             }
             sqlConnection.Close();
-            var jsonString = JsonConvert.SerializeObject(colleges);
+            var jsonString = JsonConvert.SerializeObject(colleges, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             return jsonString;
         }
 
@@ -77,6 +77,7 @@ namespace CPMS.Data.Repositories
                 while (reader.Read())
                 {
                     Student student = new Student();
+                    student.StudentId = Convert.ToInt32(reader["StudentId"]);
                     student.CollegeId = Convert.ToInt32(reader["CollegeId"]);
                     student.FirstName = Convert.ToString(reader["FirstName"]);
                     student.LastName = Convert.ToString(reader["LastName"]);
@@ -105,7 +106,7 @@ namespace CPMS.Data.Repositories
                 return jsonErrorString;
             }
             sqlConnection.Close();
-            var jsonString = JsonConvert.SerializeObject(students);
+            var jsonString = JsonConvert.SerializeObject(students, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             return jsonString;
         }
 
@@ -142,7 +143,7 @@ namespace CPMS.Data.Repositories
                 return jsonErrorString;
             }
             sqlConnection.Close();
-            var jsonString = JsonConvert.SerializeObject(departments);
+            var jsonString = JsonConvert.SerializeObject(departments, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             return jsonString;
         }
 
@@ -179,8 +180,40 @@ namespace CPMS.Data.Repositories
                 return jsonErrorString;
             }
             sqlConnection.Close();
-            var jsonString = JsonConvert.SerializeObject(departments);
+            var jsonString = JsonConvert.SerializeObject(departments, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             return jsonString;
+        }
+
+        public string InsertCollegeDetails(College college)
+        {
+            try
+            {
+                using var sqlConnection = new SqlConnection(_connectionString);
+                sqlConnection.Open();
+                using var command = new SqlCommand("InsertCollegeDetails", sqlConnection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("@CollegeName", SqlDbType.VarChar).Value = college.CollegeName;
+                command.Parameters.Add("@Email", SqlDbType.VarChar).Value = college.Email;
+                command.Parameters.Add("@PhoneNumber", SqlDbType.VarChar).Value = college.PhoneNumber;
+                command.Parameters.Add("@Fax", SqlDbType.VarChar).Value = college.Fax;
+                command.Parameters.Add("@Address", SqlDbType.VarChar).Value = college.Address;
+                command.Parameters.Add("@State", SqlDbType.VarChar).Value = college.State;
+                command.Parameters.Add("@City", SqlDbType.VarChar).Value = college.City;
+                command.Parameters.Add("@Pincode", SqlDbType.NVarChar).Value = college.Pincode;
+                command.Parameters.Add("@Country", SqlDbType.VarChar).Value = college.Country;
+                command.Parameters.Add("@CreatedBy", SqlDbType.Int).Value = college.CreatedBy;
+                command.Parameters.Add("@CollegeId", SqlDbType.Int).Direction = ParameterDirection.Output;
+                command.ExecuteNonQuery();
+                int CollegeId = Convert.ToInt32(command.Parameters["@CollegeId"].Value);
+                sqlConnection.Close();
+                var jsonString = JsonConvert.SerializeObject("College Details Inserted Successfully.");
+                return jsonString;
+            }
+            catch (Exception exp)
+            {
+                var jsonString = JsonConvert.SerializeObject(exp.Message);
+                return jsonString;
+            }
         }
     }
 }

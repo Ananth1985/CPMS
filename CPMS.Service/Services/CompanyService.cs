@@ -27,5 +27,10 @@ namespace CPMS.Service.Services
         {
             return _companyRepository.InsertPlacementRequest(placementRequest);
         }
+
+        public string InsertCompanyDetails(Company company)
+        {
+            return _companyRepository.InsertCompanyDetails(company);
+        }
     }
 }
