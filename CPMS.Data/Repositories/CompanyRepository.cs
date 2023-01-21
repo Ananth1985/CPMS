@@ -115,6 +115,7 @@ namespace CPMS.Data.Repositories
         {
             try
             {
+                string jsonString = string.Empty;
                 using var sqlConnection = new SqlConnection(_connectionString);
                 sqlConnection.Open();
                 using var command = new SqlCommand("InsertCompanyDetails", sqlConnection);
@@ -133,7 +134,10 @@ namespace CPMS.Data.Repositories
                 command.ExecuteNonQuery();
                 int CompanyId = Convert.ToInt32(command.Parameters["@CompanyId"].Value);
                 sqlConnection.Close();
-                var jsonString = JsonConvert.SerializeObject("Company Details Inserted Successfully.");
+                if (CompanyId > 0)
+                    jsonString = JsonConvert.SerializeObject("Company Details Inserted Successfully.");
+                else
+                    jsonString = JsonConvert.SerializeObject("Company Name : " + company.CompanyName + " already exists.");
                 return jsonString;
             }
             catch (Exception exp)

@@ -188,6 +188,7 @@ namespace CPMS.Data.Repositories
         {
             try
             {
+                string jsonString = string.Empty;
                 using var sqlConnection = new SqlConnection(_connectionString);
                 sqlConnection.Open();
                 using var command = new SqlCommand("InsertCollegeDetails", sqlConnection);
@@ -206,7 +207,10 @@ namespace CPMS.Data.Repositories
                 command.ExecuteNonQuery();
                 int CollegeId = Convert.ToInt32(command.Parameters["@CollegeId"].Value);
                 sqlConnection.Close();
-                var jsonString = JsonConvert.SerializeObject("College Details Inserted Successfully.");
+                if (CollegeId > 0)
+                    jsonString = JsonConvert.SerializeObject("College Details Inserted Successfully.");
+                else
+                    jsonString = JsonConvert.SerializeObject("College Name : " + college.CollegeName + " already exists.");
                 return jsonString;
             }
             catch (Exception exp)
