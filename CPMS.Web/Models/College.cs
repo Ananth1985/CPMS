@@ -1,33 +1,44 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace CPMS.Web.Models
 {
     public class College
     {
+        [JsonProperty("ID")]
         public int Id { get; set; }
 
         [Required]
+        [JsonProperty]
         public string CollegeName { get; set; }
         [Required]
+        [JsonProperty]
         public string Email { get; set; }
         [Required]
+        [JsonProperty]
         public string PhoneNumber { get; set; }
-
+        [JsonProperty("Fax")]
         public string FaxNumber { get; set;}
 
         [Required]
+        [JsonProperty]
         public string Address { get; set; }
         
         [Required]
+        [JsonProperty]
         public string State { get; set;}
         
-        [Required]        
+        [Required]
+        [JsonProperty]
         public string City { get; set; }
 
         [Required]
+        [JsonProperty]
         public string Country { get; set; }
 
         [Required]
+        [JsonProperty]
         public string Pincode { get; set; }
     }    
+
 }
