@@ -5,8 +5,8 @@ namespace CPMS.Web.Models
 {
     public class College
     {
-        [JsonProperty("ID")]
-        public int Id { get; set; }
+        [JsonProperty("CollegeId")]
+        public int CollegeId { get; set; }
 
         [Required]
         [JsonProperty]
