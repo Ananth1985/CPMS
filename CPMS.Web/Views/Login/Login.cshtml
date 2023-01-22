@@ -67,7 +67,6 @@
         $('#CompanyForm').submit(function (e) {
             e.preventDefault();
             var requestdata = { Email: $('#CompEmailAddress').val().trim(), Password: $('#CompPassword').val().trim(), TypeId: 2 };
-            debugger;
             $.ajax({
                 url: apiurl,
                 contentType: 'application/json; charset=utf-8',
@@ -76,7 +75,8 @@
                 success: function (result) {
                     var obj = $.parseJSON(result);
                     if (obj.length > 0) {
-                        SetSessionValue(obj[0].Email, obj[0].LoginId, obj[0].TypeId);
+                        var userConcernName = obj[0].CompanyName;
+                        SetSessionValue(obj[0].Email, obj[0].LoginId, obj[0].TypeId, obj[0].ProfileId, userConcernName);
                          alert('successfully received data ');
                          location.href = $("#CompanyURL").val();
                     }
@@ -92,15 +92,14 @@
             })
         })
 
-        function SetSessionValue(email,loginId,typeId)
+        function SetSessionValue(email,loginId,typeId,profileId,userConcernName)
         {
             var requestdata = { Email: email, LoginId: loginId };
             $.ajax({
-                url: "https://localhost:7054/Login/SetSessionItem?Email=" + email + "&LoginId=" + loginId + "&TypeId=" + typeId,
+                url: "https://localhost:7054/Login/SetSessionItem?Email=" + email + "&LoginId=" + loginId + "&TypeId=" + typeId + "&ProfileId=" + profileId + "&UserConcernName=" + userConcernName,
                 contentType: 'application/json; charset=utf-8',
                 type: 'Get',
                 success: function (result) {
-                    debugger;
                 },
                 error: function (e) {
                     alert('Issue in Login' + e);
@@ -119,7 +118,8 @@
                 success: function (result) {
                     var obj = $.parseJSON(result);
                     if (obj.length > 0) {
-                        SetSessionValue(obj[0].Email, obj[0].LoginId, obj[0].TypeId);
+                    var userConcernName = obj[0].CollegeName;
+                        SetSessionValue(obj[0].Email, obj[0].LoginId, obj[0].TypeId, obj[0].ProfileId, userConcernName);
                         alert('successfully received data ');
                         location.href = $("#CollegeURL").val();
                     }
