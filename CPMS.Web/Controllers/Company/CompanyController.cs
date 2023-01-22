@@ -30,6 +30,9 @@ namespace CPMS.Web.Controllers.Company
                     collegeList.Add(new SelectListItem { Text = colleges[i].CollegeName.ToString(), Value = colleges[i].CollegeId.ToString() });
                 }
                 ViewData["colleges"] = collegeList;
+                ViewBag.CompanyName = HttpContext.Session.GetString("LoggedInUserConcernName");
+                ViewBag.CompanyId = HttpContext.Session.GetString("LoggedInUserProfileId");
+                ViewBag.CreatedBy = HttpContext.Session.GetString("LoggedInUserId");
             }
                 return View();
 
