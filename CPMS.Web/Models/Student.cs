@@ -1,4 +1,4 @@
-﻿namespace CPMS.Contracts.Models
+﻿namespace CPMS.Web.Models
 {
     public class Student
     {
@@ -9,9 +9,9 @@
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
-        
+
         public int GenderId { get; set; }
-       
+
         public string Email { get; set; }
 
         public decimal CGPA { get; set; }
@@ -31,12 +31,5 @@
 
         public string Country { get; set; }
 
-        public int CreatedBy { get; set; }
-
-        public DateTime? CreatedDate { get; set; }
-
-        public int? ModifiedBy { get; set; }
-
-        public DateTime? ModifiedDate { get; set; }
     }
 }

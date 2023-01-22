@@ -1,0 +1,72 @@
+﻿@model CPMS.Web.Models.Student
+
+@{
+    ViewData["Title"] = "College";
+    // Since Students isn't a string, it requires a cast.
+    var students = ViewData["Students"] as List<CPMS.Web.Models.Student>;
+}
+    <style>
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
+
+    <h2>College Details</h2>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email )
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CGPA)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < students.Count; i++)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => @students[i].FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => @students[i].LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => @students[i].Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => @students[i].CGPA)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
