@@ -43,6 +43,7 @@ namespace CPMS.Web.Controllers
         [HttpGet]
         public void SetSessionItem(string Email,string LoginId,string TypeId,string ProfileId,string UserConcernName)
         {
+            HttpContext.Session.SetString("IsLoggedIn", "true");
             HttpContext.Session.SetString("LoggedInUserEmail", Email);
             HttpContext.Session.SetString("LoggedInUserId", LoginId);
             HttpContext.Session.SetString("LoggedInUserType", TypeId);

@@ -11,12 +11,17 @@ namespace CPMS.Web.Controllers.College
 
         public IActionResult CollegeLandingPage()
         {
-            HttpContext.Session.SetString("IsLoggedIn", "true");
-            return View();
+            if (HttpContext.Session.GetString("IsLoggedIn") == "true")
+            {
+                return View();
+            }
+            else
+            {
+                return View("../Login/Login");
+            }
         }
         public IActionResult Logout()
         {
-            HttpContext.Session.SetString("IsLoggedIn", "false");
             return View("Login");
         }
     }
