@@ -58,7 +58,7 @@
     }
 </style>
 <script type="text/javascript">
-    var apiurl = 'https://localhost:7128/api/Login/GetLoginDetails'; 
+    var apiurl = 'https://localhost:7128/api/Login/GetLoginDetails';
     $(document).ready(function () {
         $('#CompEmailAddress').val('');
         $('#CompPassword').val('');
@@ -67,40 +67,39 @@
         $('#CompanyForm').submit(function (e) {
             e.preventDefault();
             var requestdata = { Email: $('#CompEmailAddress').val().trim(), Password: $('#CompPassword').val().trim(), TypeId: 2 };
-            debugger;
             $.ajax({
                 url: apiurl,
                 contentType: 'application/json; charset=utf-8',
                 type: 'Post',
                 data: JSON.stringify(requestdata),
                 success: function (result) {
-                    var obj = $.parseJSON(result);
-                    if (obj.length > 0) {
-                        SetSessionValue(obj[0].Email, obj[0].LoginId, obj[0].TypeId);
-                         alert('successfully received data ');
-                         location.href = $("#CompanyURL").val();
+                    if (result.indexOf('User Not Found') == -1) {
+                        var obj = $.parseJSON(result);
+                        if (obj.length > 0) {
+                            var userConcernName = obj[0].CompanyName;
+                            SetSessionValue(obj[0].Email, obj[0].LoginId, obj[0].TypeId, obj[0].ProfileId, userConcernName);
+                            alert('Login successful');
+                            location.href = $("#CompanyURL").val();
+                        }
                     }
-                    else
-                    {
+                    else {
                         alert('Invalid Login Data');
                     }
-                    
+
                 },
                 error: function (e) {
-                    alert('Issue in Login'+e);
+                    alert('Issue in Login' + e);
                 }
             })
         })
 
-        function SetSessionValue(email,loginId,typeId)
-        {
+        function SetSessionValue(email, loginId, typeId, profileId, userConcernName) {
             var requestdata = { Email: email, LoginId: loginId };
             $.ajax({
-                url: "https://localhost:7054/Login/SetSessionItem?Email=" + email + "&LoginId=" + loginId + "&TypeId=" + typeId,
+                url: "https://localhost:7054/Login/SetSessionItem?Email=" + email + "&LoginId=" + loginId + "&TypeId=" + typeId + "&ProfileId=" + profileId + "&UserConcernName=" + userConcernName,
                 contentType: 'application/json; charset=utf-8',
                 type: 'Get',
                 success: function (result) {
-                    debugger;
                 },
                 error: function (e) {
                     alert('Issue in Login' + e);
@@ -117,16 +116,19 @@
                 type: 'Post',
                 data: JSON.stringify(requestdata),
                 success: function (result) {
-                    var obj = $.parseJSON(result);
-                    if (obj.length > 0) {
-                        SetSessionValue(obj[0].Email, obj[0].LoginId, obj[0].TypeId);
-                        alert('successfully received data ');
-                        location.href = $("#CollegeURL").val();
+                    if (result.indexOf('User Not Found') == -1) {
+                        var obj = $.parseJSON(result);
+                        if (obj.length > 0) {
+                            var userConcernName = obj[0].CollegeName;
+                            SetSessionValue(obj[0].Email, obj[0].LoginId, obj[0].TypeId, obj[0].ProfileId, userConcernName);
+                            alert('Login successfull');
+                            location.href = $("#CollegeURL").val();
+                        }
                     }
-                    else
-                    {
+                    else {
                         alert('Invalid Login Data');
                     }
+
                 },
                 error: function (e) {
                     alert('Issue in Login' + e);

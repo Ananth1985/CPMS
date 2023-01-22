@@ -79,13 +79,17 @@ namespace CPMS.Data.Repositories
                     Student student = new Student();
                     student.StudentId = Convert.ToInt32(reader["StudentId"]);
                     student.CollegeId = Convert.ToInt32(reader["CollegeId"]);
+                    student.CollegeName = Convert.ToString(reader["CollegeName"]);
                     student.FirstName = Convert.ToString(reader["FirstName"]);
+                    student.MiddleName = Convert.ToString(reader["MiddleName"]);
                     student.LastName = Convert.ToString(reader["LastName"]);
                     student.Email = Convert.ToString(reader["Email"]);
                     student.GenderId = Convert.ToInt32(reader["GenderId"]);
+                    student.Gender = Convert.ToString(reader["GenderName"]);
                     student.CGPA = Convert.ToDecimal(reader["CGPA"]);
                     student.NoofArrears = Convert.ToInt32(reader["NoofArrears"]);
                     student.DepartmentId = Convert.ToInt32(reader["DepartmentId"]);
+                    student.DepartmentName = Convert.ToString(reader["DepartmentName"]);
                     student.PhoneNumber = Convert.ToString(reader["PhoneNumber"]);
                     student.Address = Convert.ToString(reader["Address"]);
                     student.State = Convert.ToString(reader["State"]);
@@ -93,9 +97,7 @@ namespace CPMS.Data.Repositories
                     student.Pincode = Convert.ToString(reader["Pincode"]);
                     student.Country = Convert.ToString(reader["Country"]);
                     student.CreatedBy = Convert.ToInt32(reader["CreatedBy"]);
-                    student.CreatedDate = (reader["CreatedDate"]) != DBNull.Value ? Convert.ToDateTime(reader["CreatedDate"]) : null;
-                    student.ModifiedBy = (reader["ModifiedBy"]) != DBNull.Value ? Convert.ToInt32(reader["ModifiedBy"]) : null;
-                    student.ModifiedDate = (reader["ModifiedDate"]) != DBNull.Value ? Convert.ToDateTime(reader["ModifiedDate"]) : null;
+                    student.CreatedDate = (reader["CreatedDate"]) != DBNull.Value ? Convert.ToDateTime(reader["CreatedDate"]) : null;                 
                     students.Add(student);
                 }
             }
@@ -211,6 +213,48 @@ namespace CPMS.Data.Repositories
                     jsonString = JsonConvert.SerializeObject("College Details Inserted Successfully.");
                 else
                     jsonString = JsonConvert.SerializeObject("College Name : " + college.CollegeName + " already exists.");
+                return jsonString;
+            }
+            catch (Exception exp)
+            {
+                var jsonString = JsonConvert.SerializeObject(exp.Message);
+                return jsonString;
+            }
+        }
+
+        public string InsertStudentDetails(Student student)
+        {
+            try
+            {
+                string jsonString = string.Empty;
+                using var sqlConnection = new SqlConnection(_connectionString);
+                sqlConnection.Open();
+                using var command = new SqlCommand("InsertStudentDetails", sqlConnection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("@FirstName", SqlDbType.VarChar).Value = student.FirstName;
+                command.Parameters.Add("@MiddleName", SqlDbType.VarChar).Value = student.MiddleName;
+                command.Parameters.Add("@LastName", SqlDbType.VarChar).Value = student.LastName;
+                command.Parameters.Add("@GenderId", SqlDbType.Int).Value = student.GenderId;
+                command.Parameters.Add("@Email", SqlDbType.VarChar).Value = student.Email;
+                command.Parameters.Add("@CGPA", SqlDbType.Decimal).Value = student.CGPA;
+                command.Parameters.Add("@NoofArrears", SqlDbType.Int).Value = student.NoofArrears;               
+                command.Parameters.Add("@PhoneNumber", SqlDbType.VarChar).Value = student.PhoneNumber;               
+                command.Parameters.Add("@Address", SqlDbType.VarChar).Value = student.Address;
+                command.Parameters.Add("@State", SqlDbType.VarChar).Value = student.State;
+                command.Parameters.Add("@City", SqlDbType.VarChar).Value = student.City;
+                command.Parameters.Add("@Pincode", SqlDbType.NVarChar).Value = student.Pincode;
+                command.Parameters.Add("@Country", SqlDbType.VarChar).Value = student.Country;
+                command.Parameters.Add("@CreatedBy", SqlDbType.Int).Value = student.CreatedBy;
+                command.Parameters.Add("@CollegeId", SqlDbType.Int).Value = student.CollegeId;
+                command.Parameters.Add("@DepartmentId", SqlDbType.Int).Value = student.DepartmentId;                
+                command.Parameters.Add("@StudentId", SqlDbType.Int).Direction = ParameterDirection.Output;
+                command.ExecuteNonQuery();
+                int StudentId = Convert.ToInt32(command.Parameters["@StudentId"].Value);
+                sqlConnection.Close();
+                if (StudentId > 0)
+                    jsonString = JsonConvert.SerializeObject("Student Details Inserted Successfully.");
+                else
+                    jsonString = JsonConvert.SerializeObject("Student Name : " + student.FirstName + " " + student.MiddleName + " " + student.LastName + " already exists.");
                 return jsonString;
             }
             catch (Exception exp)

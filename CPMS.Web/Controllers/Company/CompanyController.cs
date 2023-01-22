@@ -17,34 +17,48 @@ namespace CPMS.Web.Controllers.Company
 
         public IActionResult PlacementRequest()
         {
-            var colleges = new List<CPMS.Web.Models.College>();
-            HttpClient client = new HttpClient();
-            List<SelectListItem> collegeList = new List<SelectListItem>();
-            HttpResponseMessage response = client.GetAsync("https://localhost:7128/api/College/GetCollegeDetails?collegeId").Result;
-            if (response.IsSuccessStatusCode)
+            if (HttpContext.Session.GetString("IsLoggedIn") == "true")
             {
-                var apiResponse = response.Content.ReadAsStringAsync().Result;
-                colleges = JsonSerializer.Deserialize<List<CPMS.Web.Models.College>>(apiResponse);
-                for (int i = 0; i < colleges.Count; i++)
+                var colleges = new List<CPMS.Web.Models.College>();
+                HttpClient client = new HttpClient();
+                List<SelectListItem> collegeList = new List<SelectListItem>();
+                HttpResponseMessage response = client.GetAsync("https://localhost:7128/api/College/GetCollegeDetails?collegeId").Result;
+                if (response.IsSuccessStatusCode)
                 {
-                    collegeList.Add(new SelectListItem { Text = colleges[i].CollegeName.ToString(), Value = colleges[i].CollegeId.ToString() });
+                    var apiResponse = response.Content.ReadAsStringAsync().Result;
+                    colleges = JsonSerializer.Deserialize<List<CPMS.Web.Models.College>>(apiResponse);
+                    for (int i = 0; i < colleges.Count; i++)
+                    {
+                        collegeList.Add(new SelectListItem { Text = colleges[i].CollegeName.ToString(), Value = colleges[i].CollegeId.ToString() });
+                    }
+                    ViewData["colleges"] = collegeList;
+                    ViewBag.CompanyName = HttpContext.Session.GetString("LoggedInUserConcernName");
+                    ViewBag.CompanyId = HttpContext.Session.GetString("LoggedInUserProfileId");
+                    ViewBag.CreatedBy = HttpContext.Session.GetString("LoggedInUserId");
                 }
-                ViewData["colleges"] = collegeList;
-            }
                 return View();
+            }
+            else
+            {
+                return View("../Login/Login");
+            }
 
-            
         }
 
         public IActionResult CompanyLandingPage()
         {
-            HttpContext.Session.SetString("IsLoggedIn", "true");
-            return View();
+            if (HttpContext.Session.GetString("IsLoggedIn") == "true")
+            {
+                return View();
+            }
+            else
+            {
+                return View("../Login/Login");
+            }
         }
 
         public IActionResult Logout()
         {
-            HttpContext.Session.SetString("IsLoggedIn", "false");
             return View("Login");
         }
     }
