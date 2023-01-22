@@ -219,5 +219,47 @@ namespace CPMS.Data.Repositories
                 return jsonString;
             }
         }
+
+        public string InsertStudentDetails(Student student)
+        {
+            try
+            {
+                string jsonString = string.Empty;
+                using var sqlConnection = new SqlConnection(_connectionString);
+                sqlConnection.Open();
+                using var command = new SqlCommand("InsertStudentDetails", sqlConnection);
+                command.CommandType = CommandType.StoredProcedure;
+                command.Parameters.Add("@FirstName", SqlDbType.VarChar).Value = student.FirstName;
+                command.Parameters.Add("@MiddleName", SqlDbType.VarChar).Value = student.MiddleName;
+                command.Parameters.Add("@LastName", SqlDbType.VarChar).Value = student.LastName;
+                command.Parameters.Add("@GenderId", SqlDbType.Int).Value = student.GenderId;
+                command.Parameters.Add("@Email", SqlDbType.VarChar).Value = student.Email;
+                command.Parameters.Add("@CGPA", SqlDbType.Decimal).Value = student.CGPA;
+                command.Parameters.Add("@NoofArrears", SqlDbType.Int).Value = student.NoofArrears;               
+                command.Parameters.Add("@PhoneNumber", SqlDbType.VarChar).Value = student.PhoneNumber;               
+                command.Parameters.Add("@Address", SqlDbType.VarChar).Value = student.Address;
+                command.Parameters.Add("@State", SqlDbType.VarChar).Value = student.State;
+                command.Parameters.Add("@City", SqlDbType.VarChar).Value = student.City;
+                command.Parameters.Add("@Pincode", SqlDbType.NVarChar).Value = student.Pincode;
+                command.Parameters.Add("@Country", SqlDbType.VarChar).Value = student.Country;
+                command.Parameters.Add("@CreatedBy", SqlDbType.Int).Value = student.CreatedBy;
+                command.Parameters.Add("@CollegeId", SqlDbType.Int).Value = student.CollegeId;
+                command.Parameters.Add("@DepartmentId", SqlDbType.Int).Value = student.DepartmentId;                
+                command.Parameters.Add("@StudentId", SqlDbType.Int).Direction = ParameterDirection.Output;
+                command.ExecuteNonQuery();
+                int StudentId = Convert.ToInt32(command.Parameters["@StudentId"].Value);
+                sqlConnection.Close();
+                if (StudentId > 0)
+                    jsonString = JsonConvert.SerializeObject("Student Details Inserted Successfully.");
+                else
+                    jsonString = JsonConvert.SerializeObject("Student Name : " + student.FirstName + " " + student.MiddleName + " " + student.LastName + " already exists.");
+                return jsonString;
+            }
+            catch (Exception exp)
+            {
+                var jsonString = JsonConvert.SerializeObject(exp.Message);
+                return jsonString;
+            }
+        }
     }
 }

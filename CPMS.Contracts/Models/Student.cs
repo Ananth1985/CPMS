@@ -13,7 +13,7 @@ namespace CPMS.Contracts.Models
         public int CollegeId { get; set; }
 
         public string FirstName { get; set; }
-
+        public string MiddleName { get; set; }
         public string LastName { get; set; }
         
         public int GenderId { get; set; }
