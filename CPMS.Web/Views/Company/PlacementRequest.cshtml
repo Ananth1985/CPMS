@@ -20,11 +20,11 @@
                 type: 'Post',
                 data: JSON.stringify(requestdata),
                 success: function (result) {
-                    alert('successfully received data ');
+                    alert('Placement request successfully inserted.');
                     location.href = $("#CompanyURL").val();
                 },
                 error: function () {
-                    alert('failed to receive the data');
+                    alert('Failed to insert the data');
                     location.href = url;
                 }
             })
@@ -77,7 +77,7 @@
                 <span class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input class="form-control" id="CreatedBy" value="@ViewBag.LoggedInUserId" type="hidden" />
+                <input class="form-control" id="CreatedBy" value="@ViewBag.CreatedBy" type="hidden" />
                 <span class="text-danger"></span>
             </div>
             <div class="form-group">
