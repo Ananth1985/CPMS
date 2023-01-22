@@ -8,7 +8,7 @@
     var apiurl = 'https://localhost:7128/api';
     $(document).ready(function () {
        $('#CollegeName').trigger('change');
-        $('#CompanyForm').submit(function (e) {
+        $('#PlacementRequest').submit(function (e) {
             e.preventDefault();
             var requestdata = { Email: $('#CompEmailAddress').val().trim(), Password: $('#CompPassword').val().trim(), Type: 2 };
             $.ajax({
@@ -28,28 +28,30 @@
                 }
             })
         })
-
+            
         $('#CollegeName').change(function () {
-            //e.preventDefault();
             var selValue = $(this).val();
             $.ajax({
                 url: apiurl + "/College/GetAllDepartmentByCollegeId?collegeId=" + selValue,
                 contentType: 'application/json; charset=utf-8',
                 type: 'Get',
                 success: function (result) {
+
                     debugger;
                     $('#DepartmentName')
                     .empty()
                     .append('<option value="">Select</option>');
-                    var obj = $.parseJSON(result);
-                    for (i = 0; i < obj.length; i++) {
+                    if (result.indexOf('Department Not Found') == -1) {
+                        var obj = $.parseJSON(result);
+                         for (i = 0; i < obj.length; i++) {
                         $("#DepartmentName").append($("<option>").attr("value", obj[i].DepartmentId).text(obj[i].DepartmentName));
                     }
+                    }
+                    
                 },
                 error: function () {
                     alert('failed to receive the data');
                     console.log('failed ');
-                    //location.href = url;
                 }
             })
         })
@@ -64,7 +66,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <form id="CompanyForm" name="CompanyForm">
+        <form id="PlacementRequest" name="PlacementRequest">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">Company Name</label>
@@ -99,7 +101,7 @@
                 <span class="text-danger"></span>
             </div>
             <div class="form-group" style="padding-top:15px;">
-                <input type="submit" value="Sign In" class="btn btn-primary" onclick="" />
+                <input type="submit" value="Create Placement Request" class="btn btn-primary" onclick="" />
             </div>
         </form>
     </div>

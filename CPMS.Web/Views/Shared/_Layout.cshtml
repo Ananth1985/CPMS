@@ -25,11 +25,19 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                             @{
-                                if (Context.Session.GetString("IsLoggedIn") == "true")
+                            if (Context.Session.GetString("IsLoggedIn") == "true" && Context.Session.GetString("LoggedInUserType") == "2")
                                 {
                                     @: <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="Company" asp-action="CompanyCreation">Company Registration</a> </li>
+                                @:
+                                <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="Company" asp-action="PlacementRequest">Placement Request</a> </li>
+                                }
+
+                                 if (Context.Session.GetString("IsLoggedIn") == "true" && Context.Session.GetString("LoggedInUserType") == "1")
+                                {
+                                    @: <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="College" asp-action="CollegeCreation">College Registration</a> </li>
                                 }
                             }
+
                         <li class="nav-item">
                           
                         </li>
