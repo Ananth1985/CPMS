@@ -79,13 +79,17 @@ namespace CPMS.Data.Repositories
                     Student student = new Student();
                     student.StudentId = Convert.ToInt32(reader["StudentId"]);
                     student.CollegeId = Convert.ToInt32(reader["CollegeId"]);
+                    student.CollegeName = Convert.ToString(reader["CollegeName"]);
                     student.FirstName = Convert.ToString(reader["FirstName"]);
+                    student.MiddleName = Convert.ToString(reader["MiddleName"]);
                     student.LastName = Convert.ToString(reader["LastName"]);
                     student.Email = Convert.ToString(reader["Email"]);
                     student.GenderId = Convert.ToInt32(reader["GenderId"]);
+                    student.Gender = Convert.ToString(reader["GenderName"]);
                     student.CGPA = Convert.ToDecimal(reader["CGPA"]);
                     student.NoofArrears = Convert.ToInt32(reader["NoofArrears"]);
                     student.DepartmentId = Convert.ToInt32(reader["DepartmentId"]);
+                    student.DepartmentName = Convert.ToString(reader["DepartmentName"]);
                     student.PhoneNumber = Convert.ToString(reader["PhoneNumber"]);
                     student.Address = Convert.ToString(reader["Address"]);
                     student.State = Convert.ToString(reader["State"]);
@@ -93,9 +97,7 @@ namespace CPMS.Data.Repositories
                     student.Pincode = Convert.ToString(reader["Pincode"]);
                     student.Country = Convert.ToString(reader["Country"]);
                     student.CreatedBy = Convert.ToInt32(reader["CreatedBy"]);
-                    student.CreatedDate = (reader["CreatedDate"]) != DBNull.Value ? Convert.ToDateTime(reader["CreatedDate"]) : null;
-                    student.ModifiedBy = (reader["ModifiedBy"]) != DBNull.Value ? Convert.ToInt32(reader["ModifiedBy"]) : null;
-                    student.ModifiedDate = (reader["ModifiedDate"]) != DBNull.Value ? Convert.ToDateTime(reader["ModifiedDate"]) : null;
+                    student.CreatedDate = (reader["CreatedDate"]) != DBNull.Value ? Convert.ToDateTime(reader["CreatedDate"]) : null;                 
                     students.Add(student);
                 }
             }
