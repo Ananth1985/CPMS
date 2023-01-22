@@ -8,5 +8,16 @@ namespace CPMS.Web.Controllers.College
         {
             return View();
         }
+
+        public IActionResult CollegeLandingPage()
+        {
+            HttpContext.Session.SetString("IsLoggedIn", "true");
+            return View();
+        }
+        public IActionResult Logout()
+        {
+            HttpContext.Session.SetString("IsLoggedIn", "false");
+            return View("Login");
+        }
     }
 }

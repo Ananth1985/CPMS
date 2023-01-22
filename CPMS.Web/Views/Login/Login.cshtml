@@ -3,8 +3,8 @@
 @{
     ViewData["Title"] = "Login";
 }
-@Html.Hidden("CompanyURL", Url.Action("CompanyCreation", "Company"));
-@Html.Hidden("CollegeURL", Url.Action("CollegeCreation", "College"));
+@Html.Hidden("CompanyURL", Url.Action("CompanyLandingPage", "Company"));
+@Html.Hidden("CollegeURL", Url.Action("CollegeLandingPage", "College"));
 <style>
     .tabs {
         height: 1475px;
@@ -58,7 +58,7 @@
     }
 </style>
 <script type="text/javascript">
-    var apiurl = 'https://localhost:7128/api/Login';
+    var apiurl = 'https://localhost:7128/api/Login/GetLoginDetails'; 
     $(document).ready(function () {
         $('#CompEmailAddress').val('');
         $('#CompPassword').val('');
@@ -67,23 +67,48 @@
         $('#CompanyForm').submit(function (e) {
             e.preventDefault();
             var requestdata = { Email: $('#CompEmailAddress').val().trim(), Password: $('#CompPassword').val().trim(), Type: 2 };
+            debugger;
             $.ajax({
                 url: apiurl,
                 contentType: 'application/json; charset=utf-8',
                 type: 'Post',
                 data: JSON.stringify(requestdata),
                 success: function (result) {
-                    alert('successfully received data ');
-                    console.log(result);
-                    location.href = $("#CompanyURL").val();
+                    var obj = $.parseJSON(result);
+
+                    if(obj.Login.length > 0)
+                    {
+                        SetSessionValue(obj.Login[0].Email, obj.Login[0].LoginId, obj.Login[0].TypeId);
+                         alert('successfully received data ');
+                         location.href = $("#CompanyURL").val();
+                    }
+                    else
+                    {
+                        alert('Invalid Login Data');
+                    }
+                    
                 },
-                error: function () {
-                    alert('failed to receive the data');
-                    console.log('failed ');
-                    location.href = url;
+                error: function (e) {
+                    alert('Issue in Login'+e);
                 }
             })
         })
+
+        function SetSessionValue(email,loginId,typeId)
+        {
+            var requestdata = { Email: email, LoginId: loginId };
+            $.ajax({
+                url: "https://localhost:7054/Login/SetSessionItem?Email=" + email + "&LoginId=" + loginId + "&TypeId=" + typeId,
+                contentType: 'application/json; charset=utf-8',
+                type: 'Get',
+                success: function (result) {
+                    debugger;
+                },
+                error: function (e) {
+                    alert('Issue in Login' + e);
+                }
+            })
+        }
 
         $('#CollegeForm').submit(function (e) {
             e.preventDefault();
@@ -94,14 +119,20 @@
                 type: 'Post',
                 data: JSON.stringify(requestdata),
                 success: function (result) {
-                    alert('successfully received data ');
-                    console.log(result);
-                    location.href = $("#CollegeURL").val();
+                    var obj = $.parseJSON(result);
+                    if(obj.Login.length > 0)
+                    {
+                        SetSessionValue(obj.Login[0].Email, obj.Login[0].LoginId, obj.Login[0].TypeId);
+                        alert('successfully received data ');
+                        location.href = $("#CollegeURL").val();
+                    }
+                    else
+                    {
+                        alert('Invalid Login Data');
+                    }
                 },
-                error: function () {
-                    alert('failed to receive the data');
-                    console.log('failed ');
-                    location.href = url;
+                error: function (e) {
+                    alert('Issue in Login' + e);
                 }
             })
         })

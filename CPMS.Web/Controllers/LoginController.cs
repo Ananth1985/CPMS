@@ -15,6 +15,7 @@ namespace CPMS.Web.Controllers
 
         public IActionResult Login()
         {
+            HttpContext.Session.SetString("IsLoggedIn", "false");
             return View("Login");
         }
 
@@ -26,6 +27,23 @@ namespace CPMS.Web.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.SetString("IsLoggedIn", "false");
+            HttpContext.Session.SetString("LoggedInUserEmail", "");
+            HttpContext.Session.SetString("LoggedInUserId", "");
+            HttpContext.Session.SetString("LoggedInUserType", "");
+            return View("Login");
+        }
+
+        [HttpGet]
+        public void SetSessionItem(string Email,string LoginId,string TypeId)
+        {
+            HttpContext.Session.SetString("LoggedInUserEmail", Email);
+            HttpContext.Session.SetString("LoggedInUserId", LoginId);
+            HttpContext.Session.SetString("LoggedInUserType", TypeId);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
