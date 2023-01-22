@@ -22,6 +22,14 @@ namespace CPMS.Contracts.Models
 
         public int ProfileId { get; set; }
 
+        public int? CompanyId { get; set; }
+
+        public string? CompanyName { get; set; }
+
+        public int? CollegeId { get; set; }
+
+        public string? CollegeName { get; set; }
+
         public int? CreatedBy { get; set; }
 
         public DateTime? CreatedDate { get; set; }

@@ -44,10 +44,16 @@ namespace CPMS.Data.Repositories
                     login.Password = Convert.ToString(reader["Password"]);
                     login.TypeId = Convert.ToInt32(reader["TypeId"]);
                     login.ProfileId = Convert.ToInt32(reader["ProfileId"]);
-                    login.CreatedBy = Convert.ToInt32(reader["CreatedBy"]);
-                    login.CreatedDate = (reader["CreatedDate"]) != DBNull.Value ? Convert.ToDateTime(reader["CreatedDate"]) : null;
-                    login.ModifiedBy = (reader["ModifiedBy"]) != DBNull.Value ? Convert.ToInt32(reader["ModifiedBy"]) : null;
-                    login.ModifiedDate = (reader["ModifiedDate"]) != DBNull.Value ? Convert.ToDateTime(reader["ModifiedDate"]) : null;
+                    if (login.TypeId == 1)
+                    {
+                        login.CollegeId = Convert.ToInt32(reader["CollegeId"]);
+                        login.CollegeName = Convert.ToString(reader["CollegeName"]);                        
+                    }
+                    else
+                    {
+                        login.CompanyId = Convert.ToInt32(reader["CompanyId"]);
+                        login.CompanyName = Convert.ToString(reader["CompanyName"]);
+                    }
                     logins.Add(login);
                 }
             }
