@@ -19,5 +19,7 @@ namespace CPMS.Data.Repositories
 
         public string InsertCollegeDetails(College college);
 
+        public string InsertStudentDetails(Student student);
+
     }
 }

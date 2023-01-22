@@ -41,5 +41,9 @@ namespace CPMS.Service.Services
             return _collegeRepository.InsertCollegeDetails(college);
         }
 
+        public string InsertStudentDetails(Student student)
+        {
+            return _collegeRepository.InsertStudentDetails(student);
+        }
     }
 }
