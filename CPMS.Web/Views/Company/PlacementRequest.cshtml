@@ -8,7 +8,10 @@
     var apiurl = 'https://localhost:7128/api';
     
     $(document).ready(function () {
-        $('#CollegeName').trigger('change');
+        setTimeout(function(){
+            $('#CollegeName').trigger('change');
+        },100);
+        
         $('#PlacementRequest').submit(function (e) {
             debugger;
             e.preventDefault();
@@ -21,11 +24,11 @@
                 data: JSON.stringify(requestdata),
                 success: function (result) {
                     alert('Placement request successfully inserted.');
-                    location.href = $("#CompanyURL").val();
+                    $('#PlacementRequest').trigger("reset");
                 },
                 error: function () {
                     alert('Failed to insert the data');
-                    location.href = url;
+                    $('#PlacementRequest').trigger("reset");
                 }
             })
         })
