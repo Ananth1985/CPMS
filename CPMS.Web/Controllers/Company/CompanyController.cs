@@ -12,6 +12,7 @@ namespace CPMS.Web.Controllers.Company
     {
         public IActionResult CompanyCreation()
         {
+            ViewBag.CreatedBy = HttpContext.Session.GetString("LoggedInUserId");
             return View();
         }
 
