@@ -8,8 +8,15 @@ namespace CPMS.Web.Controllers.Company
     {
         public IActionResult CompanyCreation()
         {
-            ViewBag.CreatedBy = HttpContext.Session.GetString("LoggedInUserId");
-            return View();
+            if (HttpContext.Session.GetString("IsLoggedIn") == "true")
+            {
+                ViewBag.CreatedBy = HttpContext.Session.GetString("LoggedInUserId");
+                return View();
+            }
+            else
+            {
+                return View("../Login/Login");
+            }
         }
 
         public IActionResult PlacementRequest()
@@ -42,11 +49,12 @@ namespace CPMS.Web.Controllers.Company
 
         }
 
-        public IActionResult CompanyLandingPage()
+        public IActionResult Company()
         {
             if (HttpContext.Session.GetString("IsLoggedIn") == "true")
             {
-                return View();
+                ViewBag.CompanyName = HttpContext.Session.GetString("LoggedInUserConcernName");
+                return View("Company");
             }
             else
             {
