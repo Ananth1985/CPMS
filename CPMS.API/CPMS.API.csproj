@@ -17,4 +17,8 @@
     <ProjectReference Include="..\CPMS.Service\CPMS.Service.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Testcases\" />
+  </ItemGroup>
+
 </Project>
