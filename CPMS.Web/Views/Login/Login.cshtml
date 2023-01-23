@@ -3,8 +3,6 @@
 @{
     ViewData["Title"] = "Login";
 }
-@Html.Hidden("CompanyURL", Url.Action("Company", "Company"))
-@Html.Hidden("CollegeURL", Url.Action("College", "College"))
 <style type="text/css">
     .divider:after,
     .divider:before {
@@ -18,9 +16,8 @@
         height: calc(100% - 73px);
     }
 
-    .media (max-width: 450px) 
-        .h-custom 
-    {
+    .media (max-width: 450px)
+    .h-custom {
         height: 100%;
     }
 
@@ -28,147 +25,35 @@
         height: 80vh !important;
     }
 
-    #loading
-    {
-        display:none;
-        position:fixed;
-        left:0;
-        top:0;
-        width:100%;
-        height:100%;
-        background:rgba(255,255,255,0.8);
-        z-index:1000;
+    #loading {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255,255,255,0.8);
+        z-index: 1000;
     }
-  
-    #loadingcontent
-    {
-        display:table;
-        position:fixed;
-        left:0;
-        top:0;
-        width:100%;
-        height:100%;
+
+    #loadingcontent {
+        display: table;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
     }
-  
-    #loadingspinner
-    {
+
+    #loadingspinner {
         display: table-cell;
-        vertical-align:middle;
+        vertical-align: middle;
         width: 100%;
         text-align: center;
-        font-size:larger;
-        padding-top:80px;
+        font-size: larger;
+        padding-top: 80px;
     }
 </style>
-@*<style>
-    .tabs {
-        height: 100%;
-        width: 100%;
-        text-align: left;   
-        background-color: red;
-
-    }
-
-    .tab-nav-wrapper {
-        width: 100%;
-        overflow-x: auto;
-        position: relative !important;
-        z-index: 999 !important;
-        top: 3px;   
-    }
-
-    .tabs ul {
-        display: block;
-        /*width: max-content;*/
-        overflow-y: hidden;
-        margin: 0px;
-        padding-inline-start: 5px;
-    }
-
-        .tabs ul li {
-            display: inline-block;
-            border: 1px solid grey;
-            border-bottom: 3px solid black;
-            background-color: white;
-        }
-
-            .tabs ul li.active {
-                border: 1px solid black;
-                border-bottom: 3px solid white;
-            }
-
-            .tabs ul li a {
-                text-decoration: none;
-                color: black;
-                padding: 10px;
-                line-height: 25px;
-                position: relative;
-                font-weight: bold;
-            }
-
-    .tab-content-wrapper {
-        position: relative !important;
-        z-index: 1 !important;
-        border: 5px solid black;
-        padding: 20px;
-        min-height: 40px;        
-    }
-</style>*@
-
-@*<div class="tabs">
-    <div class="tab-nav-wrapper">
-        <ul>
-            <li class="active"><a href="#tab1">Company </a></li>
-            <li><a href="#tab2">College</a></li>
-        </ul>
-    </div>
-    <div class="tab-content-wrapper">
-        <div id="tab1" class="tab-content" style="display:none;">
-            <div class="row">
-                <div class="col-md-4">
-                    <form id="CompanyForm" name="CompanyForm">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="EmailAddress" class="control-label"></label>
-                            <input asp-for="EmailAddress" class="form-control" id="CompEmailAddress" />
-                            <span asp-validation-for="EmailAddress" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Password" class="control-label"></label>
-                            <input asp-for="Password" class="form-control" type="password" id="CompPassword" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        <div class="form-group" style="padding-top:15px;">
-                            <input type="submit" value="Sign In" class="btn btn-primary" onclick="" />
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div id="tab2" class="tab-content" style="display:none;">
-            <div class="row">
-                <div class="col-md-4">
-                    <form id="CollegeForm" name="CollegeForm">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="EmailAddress" class="control-label"></label>
-                            <input asp-for="EmailAddress" class="form-control" id="CollEmailAddress" />
-                            <span asp-validation-for="EmailAddress" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Password" class="control-label"></label>
-                            <input asp-for="Password" class="form-control" type="password" id="CollPassword" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        <div class="form-group" style="padding-top:15px;">
-                            <input type="submit" value="Sign In" class="btn btn-primary" onclick="" />
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>*@
 
 <section class="vh-100">
     <div class="container-fluid h-custom">
@@ -178,24 +63,19 @@
                      class="img-fluid" alt="Sample image">
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <form id="CompanyForm" name="CompanyForm">
-                    <div id="loading">
-                        <div id="loadingcontent">
-                            <p id="loadingspinner">
-                                Please wait...
-                            </p>
-                        </div>
-                    </div>
+                <form id="LoginForm" name="LoginForm">
                     <!-- Email input -->
                     <div class="form-outline mb-4">
-                        <input type="email" id="CompEmailAddress" asp-for="EmailAddress" class="form-control form-control-lg" placeholder="Enter a valid email address" />
                         <label class="form-label" asp-for="EmailAddress">Email address</label>
+                        <input type="email" id="LoginEmailAddress" asp-for="EmailAddress" class="form-control form-control-lg" placeholder="Enter a valid email address" />
+                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
                     </div>
 
                     <!-- Password input -->
                     <div class="form-outline mb-3">
-                        <input type="password" id="CompPassword" class="form-control form-control-lg" placeholder="Enter password" asp-for="Password" />
                         <label class="form-label" asp-for="Password">Password</label>
+                        <input type="password" id="LoginPassword" class="form-control form-control-lg" placeholder="Enter password" asp-for="Password" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
                     </div>
 
                     <div class="d-flex justify-content-between align-items-center">
@@ -205,148 +85,79 @@
                             <label class="form-check-label" for="form2Example3">
                                 Remember me
                             </label>
-                        </div>                       
+                        </div>
                     </div>
 
                     <div class="text-center text-lg-start mt-4 pt-2">
-                        <input type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;" value="Sign In" onclick="" />                       
-                    </div>                    
+                        <input type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;" value="Sign In" onclick="" />
+                    </div>
                 </form>
             </div>
         </div>
     </div>
-    @*<div class="d-flex flex-column flex-md-row text-center text-md-start justify-content-between py-4 px-4 px-xl-5 bg-primary">
-        <!-- Copyright -->
-        <div class="text-white mb-3 mb-md-0">
-            Copyright © 2020. All rights reserved.
-        </div>
-        <!-- Copyright -->
-        <!-- Right -->
-        <div>
-            <a href="#!" class="text-white me-4">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <a href="#!" class="text-white me-4">
-                <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#!" class="text-white me-4">
-                <i class="fab fa-google"></i>
-            </a>
-            <a href="#!" class="text-white">
-                <i class="fab fa-linkedin-in"></i>
-            </a>
-        </div>
-        <!-- Right -->
-    </div>*@
 </section>
 
-<script type="text/javascript">   
+<script type="text/javascript">
     var apiurl = 'https://localhost:7128/api/Login/GetLoginDetails';
     $(document).ready(function () {
-        $('#CompEmailAddress').val('');
-        $('#CompPassword').val('');
-        $('#CollEmailAddress').val('');
-        $('#CollPassword').val('');       
-        $('#CompanyForm').submit(function (e) {
-            //$("#loading").fadeIn();
+        $('#LoginEmailAddress').val('');
+        $('#LoginPassword').val('');
+
+        $('#LoginForm').submit(function (e) {
             e.preventDefault();
-            var requestdata = { Email: $('#CompEmailAddress').val().trim(), Password: $('#CompPassword').val().trim(), TypeId: 2 };
-            $.ajax({
-                url: apiurl,
-                contentType: 'application/json; charset=utf-8',
-                type: 'Post',
-                data: JSON.stringify(requestdata),
-                success: function (result) {
-                    if (result.indexOf('User Not Found') == -1) {
-                        var obj = $.parseJSON(result);
-                        if (obj.length > 0) {                           
-                            var userConcernName = obj[0].CompanyName;
-                            SetSessionValue(obj[0].Email, obj[0].LoginId, obj[0].TypeId, obj[0].ProfileId, userConcernName);  
-                            if (obj[0].TypeId == "1")
-                            {
-                                location.href = $("#CollegeURL").val();
-                            }
-                            else
-                            {
-                                location.href = $("#CompanyURL").val();
-                            }
-                        }
-                    }
-                    else {
-                        $("#loading").visible(false);
-                        alert('Invalid Login Data');
-                    }
-
-                },
-                error: function (e) {
-                    $("#loading").visible(false);
-                    alert('Issue in Login' + e);
-                }
-            })
-        })
-
-        function SetSessionValue(email, loginId, typeId, profileId, userConcernName) {
-            var requestdata = { Email: email, LoginId: loginId };
-            $.ajax({
-                url: "https://localhost:7054/Login/SetSessionItem?Email=" + email + "&LoginId=" + loginId + "&TypeId=" + typeId + "&ProfileId=" + profileId + "&UserConcernName=" + userConcernName,
-                contentType: 'application/json; charset=utf-8',
-                type: 'Get',
-                success: function (result) {
-                },
-                error: function (e) {
-                    alert('Issue in Login' + e);
-                }
-            })
+            if (($('#LoginEmailAddress').val() == "") || ($('#LoginPassword').val() == "")) {
+            return false;
         }
-
-        $('#CollegeForm').submit(function (e) {
-            e.preventDefault();
-            var requestdata = { Email: $('#CollEmailAddress').val().trim(), Password: $('#CollPassword').val().trim(), TypeId: 1 };
-            $.ajax({
-                url: apiurl,
-                contentType: 'application/json; charset=utf-8',
-                type: 'Post',
-                data: JSON.stringify(requestdata),
-                success: function (result) {
-                    if (result.indexOf('User Not Found') == -1) {
-                        var obj = $.parseJSON(result);
-                        if (obj.length > 0) {
+        var requestdata = { Email: $('#LoginEmailAddress').val().trim(), Password: $('#LoginPassword').val().trim() };
+        $.ajax({
+            url: apiurl,
+            contentType: 'application/json; charset=utf-8',
+            type: 'Post',
+            data: JSON.stringify(requestdata),
+            success: function (result) {
+                if (result.indexOf('User Not Found') == -1) {
+                    var obj = $.parseJSON(result);
+                    if (obj.length > 0) {
+                        if (obj[0].TypeId == "1") {
                             var userConcernName = obj[0].CollegeName;
                             SetSessionValue(obj[0].Email, obj[0].LoginId, obj[0].TypeId, obj[0].ProfileId, userConcernName);
-                            alert('Login successfull');
-                            location.href = $("#CollegeURL").val();
+                        }
+                        else {
+                            var userConcernName = obj[0].CompanyName;
+                            SetSessionValue(obj[0].Email, obj[0].LoginId, obj[0].TypeId, obj[0].ProfileId, userConcernName);
                         }
                     }
-                    else {
-                        alert('Invalid Login Data');
-                    }
-
-                },
-                error: function (e) {
-                    alert('Issue in Login' + e);
                 }
-            })
-        })
-
-        $(".tab-nav-wrapper li.active").click();
-        $($(".tab-nav-wrapper li.active a").attr("href")).show();
-
-        $(".tab-nav-wrapper li").click(function (e) {
-            $('#CollEmailAddress').val('');
-            $('#CollPassword').val('');
-            $('#CompEmailAddress').val('');
-            $('#CompPassword').val('');
-            e.preventDefault();
-            e.stopPropagation();
-
-            $(".tab-nav-wrapper li").removeClass("active");
-            $(this).addClass("active");
-
-            var target = $(this).find("a").attr("href");
-            $(".tab-content-wrapper").find(".tab-content").hide();
-            $(".tab-content-wrapper").find(target).show();
+                else {
+                    alert('Invalid Login Data');
+                }
+            },
+            error: function (e) {
+                alert('Issue in Login' + e);
+            }
         })
     })
+
+    function SetSessionValue(email, loginId, typeId, profileId, userConcernName) {
+        var requestdata = { Email: email, LoginId: loginId };
+        $.ajax({
+            url: "https://localhost:7054/Login/SetSessionItem?Email=" + email + "&LoginId=" + loginId + "&TypeId=" + typeId + "&ProfileId=" + profileId + "&UserConcernName=" + userConcernName,
+            contentType: 'application/json; charset=utf-8',
+            type: 'Get',
+            success: function (result) {
+                if (typeId == "1") {
+                    window.location.href = '@Url.Action("College", "College")';
+                }
+                else {
+                    window.location.href = '@Url.Action("Company", "Company")';
+                }
+            },
+            error: function (e) {
+                alert('Issue in Login' + e);
+            }
+        })
+    }
+        })
 </script>
 
 @section Scripts {

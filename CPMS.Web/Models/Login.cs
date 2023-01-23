@@ -9,8 +9,7 @@ namespace CPMS.Web.Models
 
         [Required]  
         public string Password { get; set; }
-
-        [Required]  
+        
         public int Type { get; set; }
                 
         public int Id { get; set; }

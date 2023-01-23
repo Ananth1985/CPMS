@@ -19,6 +19,7 @@ namespace CPMS.Web.Controllers
             return View("Login");
         }
 
+        [ValidateAntiForgeryToken]
         public IActionResult Submit(Login objLogin)
         {
             return View("Login");
