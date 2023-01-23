@@ -24,7 +24,7 @@
                     }
                     else
                     {
-                        <a class="navbar-brand" asp-area="" asp-controller="Login" asp-action="Login">Login</a>
+                        <a class="navbar-brand" asp-area="" asp-controller="Login" asp-action="Login">Campus Placement Management System </a>
                     }
                 }
                
@@ -37,9 +37,9 @@
                             @{
                                 if (Context.Session.GetString("IsLoggedIn") == "true" && Context.Session.GetString("LoggedInUserType") == "2")
                                 {
-                                    @: <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="Company" asp-action="CompanyCreation">Company Registration</a> </li>
-                                @:
-                                <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="Company" asp-action="PlacementRequest">Placement Request</a> </li>
+                                     <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="Company" asp-action="CompanyCreation">Company Registration</a> </li>
+                                
+                                    <li class="nav-item"> <a class="nav-link text-dark" asp-area="" asp-controller="Company" asp-action="PlacementRequest">Placement Request</a> </li>
                                 }
 
                                 if (Context.Session.GetString("IsLoggedIn") == "true" && Context.Session.GetString("LoggedInUserType") == "1")
