@@ -71,7 +71,11 @@
     var apiUrl = "https://localhost:7128/api/College/InsertCollegeDetails";
     $(document).ready(function () {
         $('#CollegeCreation').submit(function (e) {
-            e.preventDefault();
+
+            e.preventDefault(); 
+            if (($('#CompanyName').val() == "") || ($('#Email').val() == "") || ($('#PhoneNumber').val() == "") || ($('#FaxNumber').val() == "") || ($('#Address').val() == "") || ($('#State').val() == "") || ($('#City').val() == "") || ($('#Country').val() == "") || ($('#Pincode').val() == "")) {
+                return false;
+            }
             var data = {
                 CollegeName: $('#CollegeName').val().trim(),
                 Email: $('#Email').val().trim(),

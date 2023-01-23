@@ -6,6 +6,9 @@
      $(document).ready(function () {
          $('#CompanyCreation').submit(function (e) {
              e.preventDefault();
+             if (($('#CompanyName').val() == "") || ($('#Email').val() == "") || ($('#PhoneNumber').val() == "") || ($('#FaxNumber').val() == "") || ($('#Address').val() == "") || ($('#State').val() == "") || ($('#City').val() == "") || ($('#Country').val() == "") || ($('#Pincode').val() == "")) {
+            return false;
+        }
              var data = {
                  CompanyName: $('#CompanyName').val().trim(),
                  Email: $('#Email').val().trim(),
