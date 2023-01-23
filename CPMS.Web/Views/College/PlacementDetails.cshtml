@@ -1,0 +1,74 @@
+﻿@model CPMS.Web.Models.PlacementRequest
+
+@{
+    ViewData["Title"] = "College";
+    var placements = ViewData["Placements"] as List<CPMS.Web.Models.PlacementRequest>;
+}
+
+<h1>@ViewBag.CollegeName</h1>
+
+<div>
+    <table id="Placement" class="table table-striped table-bordered table-sm table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th Style="text-align: center;">#</th>
+                <th>Company Name</th>
+                <th>Requested Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < placements.Count; i++)
+            {
+                <tr>
+                    <td Style="text-align: center;">
+                        <img src="~/Images/plus.png" style="width:1em; height:1em;" />
+                        <div style="display:none">
+                            <table class="table table-striped table-bordered table-sm">
+                                <thead>
+                                    <tr>
+                                        <th Style="text-align: center;">#</th>
+                                        <th>Eligible Departments</th>
+                                        <th>Least CGPA Required</th>
+                                        <th>Standing Arrears Permissible</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @for (int j = 0; j < placements[i].PlacementDetails.Count; j++)
+                                    {
+                                        <tr>
+                                            <td Style="text-align: center;">@(j + 1)</td>
+                                            <td>@Html.DisplayFor(modelItem => @placements[i].PlacementDetails[j].DepartmentName)</td>
+                                            <td>@Html.DisplayFor(modelItem => @placements[i].PlacementDetails[j].CGPA)</td>
+                                            <td>@Html.DisplayFor(modelItem => @placements[i].PlacementDetails[j].Arrears)</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </td>
+                    <td Style="text-align: center;">@(i + 1)</td>
+                    <td>@Html.DisplayFor(modelItem => @placements[i].CompanyName)</td>
+                    <td>@Convert.ToString(string.Format("{0:dd/MM/yyyy}", @placements[i].RequestedDate))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#Placement").on("click", "img[src*='plus.png']", function () {
+        $(this).closest("tr").after("<tr><td></td><td colspan ='999'>" + $(this).next().html() + "</td></tr>");
+        $(this).attr("src", "/images/minus.png");
+    });
+    $("#Placement").on("click", "img[src*='minus.png']", function () {
+        $(this).attr("src", "/images/plus.png");
+        $(this).closest("tr").next().remove();
+    });
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

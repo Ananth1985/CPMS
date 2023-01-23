@@ -1,4 +1,4 @@
-﻿namespace CPMS.Contracts.Models
+﻿namespace CPMS.Web.Models
 {
     public class PlacementRequest
     {
@@ -20,14 +20,7 @@
 
         public int Arrears { get; set; }
 
-        public int CreatedBy { get; set; }
-
-        public DateTime? CreatedDate { get; set; }
-
-        public int? ModifiedBy { get; set; }
-
-        public DateTime? ModifiedDate { get; set; }
-
         public List<PlacementRequestDetails> PlacementDetails { get; set; }
+
     }
 }

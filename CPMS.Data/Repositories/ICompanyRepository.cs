@@ -11,6 +11,8 @@ namespace CPMS.Data.Repositories
     {
         public string GetCompanyDetails(int? companyId);
 
+        public string GetPlacementRequestByCollegeId(int collegeId);
+
         public string InsertPlacementRequest(PlacementRequest placementRequest);
 
         public string InsertCompanyDetails(Company company);

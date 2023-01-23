@@ -1,8 +1,6 @@
 ﻿using CPMS.Contracts.Models;
 using CPMS.Service.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Web.Http.Cors;
 
 namespace CPMS.API.Controllers
 {
@@ -22,6 +20,13 @@ namespace CPMS.API.Controllers
         public string GetCompanyDetails(int? companyId = null)
         {
             return _companyService.GetCompanyDetails(companyId);
+        }
+
+        [HttpGet]
+        [Route("GetPlacementRequestByCollegeId")]
+        public string GetPlacementRequestByCollegeId(int collegeId)
+        {
+            return _companyService.GetPlacementRequestByCollegeId(collegeId);
         }
 
         [HttpPost]

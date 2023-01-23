@@ -1,10 +1,5 @@
 ﻿using CPMS.Contracts.Models;
 using CPMS.Data.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CPMS.Service.Services
 {
@@ -16,12 +11,15 @@ namespace CPMS.Service.Services
             _companyRepository = companyRepository;
         }
 
-
         public string GetCompanyDetails(int? companyId)
         {
             return _companyRepository.GetCompanyDetails(companyId);
         }
 
+        public string GetPlacementRequestByCollegeId(int collegeId)
+        {
+            return _companyRepository.GetPlacementRequestByCollegeId(collegeId);
+        }
 
         public string InsertPlacementRequest(PlacementRequest placementRequest)
         {

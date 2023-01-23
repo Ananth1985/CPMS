@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CPMS.Contracts.Models
+﻿namespace CPMS.Contracts.Models
 {
     public class Student
     {
@@ -15,7 +9,9 @@ namespace CPMS.Contracts.Models
         public string? CollegeName { get; set; }
 
         public string FirstName { get; set; }
+
         public string MiddleName { get; set; }
+
         public string LastName { get; set; }
         
         public int GenderId { get; set; }
@@ -25,6 +21,7 @@ namespace CPMS.Contracts.Models
         public string Email { get; set; }
 
         public decimal CGPA { get; set; }
+
         public int NoofArrears { get; set; }
 
         public int DepartmentId { get; set; }

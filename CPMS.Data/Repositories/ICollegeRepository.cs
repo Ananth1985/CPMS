@@ -1,9 +1,4 @@
 ﻿using CPMS.Contracts.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CPMS.Data.Repositories
 {
@@ -12,6 +7,8 @@ namespace CPMS.Data.Repositories
         public string GetCollegeDetails(int? collegeId);
 
         public string GetStudentDetails(int? studentId);
+
+        public string GetStudentDetailsByCollegeId(int collegeId);
 
         public string GetDepartmentDetails(int? departmentId);
 
