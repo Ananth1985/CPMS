@@ -3,73 +3,8 @@
     @using System.Collections;
 }
 
-
-<script type="text/javascript">
-    var apiurl = 'https://localhost:7128/api';
-    
-    $(document).ready(function () {
-        setTimeout(function(){
-            $('#CollegeName').trigger('change');
-        },100);
-        
-        $('#PlacementRequest').submit(function (e) {
-            e.preventDefault();
-            var requestdata = {
-                CollegeId: $('#CollegeName').val().trim(), CompanyId: $('#CompanyId').val().trim(), RequestedDate: $('#RequestedDate').val().trim(), CreatedBy: $('#CreatedBy').val().trim(), DepartmentIds: $('#DepartmentName').val().trim(), Arrears: $('#arrears').val().trim(), CGPA: $('#ExpectedCGPA').val().trim(), PlacementDetails:[ { PlacementRequestDetailsId : 0,
-                    DepartmentId: 0, DepartmentName: "string", CGPA: 0,
-                    Arrears: 0,
-                    CreatedBy: 0,
-                    CreatedDate: null
-                }]
-            };
-            console.log(requestdata);
-            $.ajax({
-                url: apiurl + "/Company/InsertPlacementRequest",
-                contentType: 'application/json; charset=utf-8',
-                type: 'Post',
-                data: JSON.stringify(requestdata),
-                success: function (result) {
-                    alert('Placement request successfully inserted.');
-                    $('#PlacementRequest').trigger("reset");
-                },
-                error: function (xhr) {
-                    alert('Failed to insert the data');
-                    //alert('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);
-                    $('#PlacementRequest').trigger("reset");
-                }
-            })
-        })
-
-        $('#CollegeName').change(function () {
-            var selValue = $(this).val();
-            $.ajax({
-                url: apiurl + "/College/GetAllDepartmentByCollegeId?collegeId=" + selValue,
-                contentType: 'application/json; charset=utf-8',
-                type: 'Get',
-                success: function (result) {
-                    $('#DepartmentName')
-                        .empty()
-                        .append('<option value="">Select</option>');
-                    if (result.indexOf('Department Not Found') == -1) {
-                        var obj = $.parseJSON(result);
-                        for (i = 0; i < obj.length; i++) {
-                            $("#DepartmentName").append($("<option>").attr("value", obj[i].DepartmentId).text(obj[i].DepartmentName));
-                        }
-                    }
-
-                },
-                error: function () {
-                    alert('failed to receive the data');
-                }
-            })
-        })
-
-
-    })
-</script>
 <h1>Placement Request</h1>
 <hr />
-
 
 
 <div class="row">
@@ -129,10 +64,69 @@
 </div>
 
 
+<script type="text/javascript">
+    var apiurl = 'https://localhost:7128/api';
+
+    $(document).ready(function () {
+        setTimeout(function () {
+            $('#CollegeName').trigger('change');
+        }, 100);
+
+        $('#PlacementRequest').submit(function (e) {
+            e.preventDefault();
+            var requestdata = {
+                CollegeId: $('#CollegeName').val().trim(), CompanyId: $('#CompanyId').val().trim(), RequestedDate: $('#RequestedDate').val().trim(), CreatedBy: $('#CreatedBy').val().trim(), DepartmentIds: $('#DepartmentName').val().trim(), Arrears: $('#arrears').val().trim(), CGPA: $('#ExpectedCGPA').val().trim(), PlacementDetails: [{
+                    PlacementRequestDetailsId: 0,
+                    DepartmentId: 0, DepartmentName: "string", CGPA: 0,
+                    Arrears: 0,
+                    CreatedBy: 0,
+                    CreatedDate: null
+                }]
+            };
+            console.log(requestdata);
+            $.ajax({
+                url: apiurl + "/Company/InsertPlacementRequest",
+                contentType: 'application/json; charset=utf-8',
+                type: 'Post',
+                data: JSON.stringify(requestdata),
+                success: function (result) {
+                    alert('Placement request successfully inserted.');
+                    $('#PlacementRequest').trigger("reset");
+                },
+                error: function (xhr) {
+                    alert('Failed to insert the data');
+                    $('#PlacementRequest').trigger("reset");
+                }
+            })
+        })
+
+        $('#CollegeName').change(function () {
+            var selValue = $(this).val();
+            $.ajax({
+                url: apiurl + "/College/GetAllDepartmentByCollegeId?collegeId=" + selValue,
+                contentType: 'application/json; charset=utf-8',
+                type: 'Get',
+                success: function (result) {
+                    $('#DepartmentName')
+                        .empty()
+                        .append('<option value="">Select</option>');
+                    if (result.indexOf('Department Not Found') == -1) {
+                        var obj = $.parseJSON(result);
+                        for (i = 0; i < obj.length; i++) {
+                            $("#DepartmentName").append($("<option>").attr("value", obj[i].DepartmentId).text(obj[i].DepartmentName));
+                        }
+                    }
+
+                },
+                error: function () {
+                    alert('failed to receive the data');
+                }
+            })
+        })
 
 
-
-
+    })
+</script>
 
 @section Scripts {
     @{

@@ -1,8 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using CPMS.Web.Models;
-using System.Net.Http.Headers;
-using System.Security.Cryptography.Xml;
-using System.Security.Policy;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
