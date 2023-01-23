@@ -8,8 +8,15 @@ namespace CPMS.Web.Controllers.Company
     {
         public IActionResult CompanyCreation()
         {
-            ViewBag.CreatedBy = HttpContext.Session.GetString("LoggedInUserId");
-            return View();
+            if (HttpContext.Session.GetString("IsLoggedIn") == "true")
+            {
+                ViewBag.CreatedBy = HttpContext.Session.GetString("LoggedInUserId");
+                return View();
+            }
+            else
+            {
+                return View("../Login/Login");
+            }
         }
 
         public IActionResult PlacementRequest()
