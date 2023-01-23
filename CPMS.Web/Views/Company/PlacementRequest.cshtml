@@ -13,9 +13,15 @@
         },100);
         
         $('#PlacementRequest').submit(function (e) {
-            debugger;
             e.preventDefault();
-            var requestdata = { CollegeId: $('#CollegeName').val().trim(), CompanyId: $('#CompanyId').val().trim(), RequestedDate: $('#RequestedDate').val().trim(), CreatedBy: $('#CreatedBy').val().trim(), DepartmentIds: $('#DepartmentName').val().trim(), Arrears: $('#arrears').val().trim(), CGPA: $('#ExpectedCGPA').val().trim() };
+            var requestdata = {
+                CollegeId: $('#CollegeName').val().trim(), CompanyId: $('#CompanyId').val().trim(), RequestedDate: $('#RequestedDate').val().trim(), CreatedBy: $('#CreatedBy').val().trim(), DepartmentIds: $('#DepartmentName').val().trim(), Arrears: $('#arrears').val().trim(), CGPA: $('#ExpectedCGPA').val().trim(), PlacementDetails:[ { PlacementRequestDetailsId : 0,
+                    DepartmentId: 0, DepartmentName: "string", CGPA: 0,
+                    Arrears: 0,
+                    CreatedBy: 0,
+                    CreatedDate: null
+                }]
+            };
             console.log(requestdata);
             $.ajax({
                 url: apiurl + "/Company/InsertPlacementRequest",
@@ -26,8 +32,9 @@
                     alert('Placement request successfully inserted.');
                     $('#PlacementRequest').trigger("reset");
                 },
-                error: function () {
+                error: function (xhr) {
                     alert('Failed to insert the data');
+                    //alert('Request Status: ' + xhr.status + ' Status Text: ' + xhr.statusText + ' ' + xhr.responseText);
                     $('#PlacementRequest').trigger("reset");
                 }
             })
@@ -66,7 +73,9 @@
 
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-4">
+        </div>
+    <div class="col-md-4">
         <form id="PlacementRequest" name="PlacementRequest">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -75,15 +84,15 @@
                        }" disabled />
                 <span class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" hidden>
                 <input class="form-control" id="CompanyId" value="@ViewBag.CompanyId" type="hidden" />
                 <span class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" hidden>
                 <input class="form-control" id="CreatedBy" value="@ViewBag.CreatedBy" type="hidden" />
                 <span class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group dropdown">
                 <label class="control-label">College Name</label>
                 @Html.DropDownList("colleges", ViewData["colleges"] as SelectList,new { @class="dropdown", @id="CollegeName" })
                 <span class="text-danger"></span>
@@ -93,7 +102,7 @@
                 <input class="form-control" id="RequestedDate" type="Date" />
                 <span class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group dropdown">
                 <label class="control-label">Department Name</label>
                 <select id="DepartmentName" class="dropdown">
                     <option value=''>Select</option>
@@ -114,6 +123,8 @@
                 <input type="submit" value="Create Placement Request" class="btn btn-primary" onclick="" />
             </div>
         </form>
+    </div>
+    <div class="col-md-4">
     </div>
 </div>
 
