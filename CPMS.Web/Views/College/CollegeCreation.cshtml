@@ -6,39 +6,7 @@
 
 <h1>College Registration</h1>
 <hr />
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#CollegeForm').submit(function (e) {
-            e.preventDefault();
-            var data = {
-                CompanyName: $('#CollegeName').val().trim(),
-                Email: $('#Email').val().trim(),
-                PhoneNumber: $('#PhoneNumber').val().trim(),
-                Fax: $('#FaxNumber').val().trim(),
-                Address: $('#Address').val().trim(),
-                State: $('#State').val().trim(),
-                City: $('#City').val().trim(),
-                Country: $('#Country').val().trim(),
-                Pincode: $('#Pincode').val().trim(),
-            };
-            alert(data);
-            $.ajax({
-                url: apiurl,
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    alert('successfully received data ');
-                    console.log(result);
-                },
-                error: function () {
-                    alert('failed to receive the data');
-                    console.log('failed ');
-                }
-            })
-        })
-    })
-</script>
+
 <div class="row">
     <div class="col-md-4">
         <form id="CollegeForm" name="CollegeForm">
@@ -100,6 +68,39 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#CollegeForm').submit(function (e) {
+            e.preventDefault();
+            var data = {
+                CompanyName: $('#CollegeName').val().trim(),
+                Email: $('#Email').val().trim(),
+                PhoneNumber: $('#PhoneNumber').val().trim(),
+                Fax: $('#FaxNumber').val().trim(),
+                Address: $('#Address').val().trim(),
+                State: $('#State').val().trim(),
+                City: $('#City').val().trim(),
+                Country: $('#Country').val().trim(),
+                Pincode: $('#Pincode').val().trim(),
+            };
+            alert(data);
+            $.ajax({
+                url: apiurl,
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                success: function (result) {
+                    alert('successfully received data ');
+                    console.log(result);
+                },
+                error: function () {
+                    alert('failed to receive the data');
+                    console.log('failed ');
+                }
+            })
+        })
+    })
+</script>
 
 
 @section Scripts {

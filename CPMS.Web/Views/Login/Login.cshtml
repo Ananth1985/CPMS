@@ -57,6 +57,63 @@
         min-height: 40px;
     }
 </style>
+<h1>Login</h1>
+<hr />
+<div class="tabs">
+    <div class="tab-nav-wrapper">
+        <ul>
+            <li class="active"><a href="#tab1">Company </a></li>
+            <li><a href="#tab2">College</a></li>
+        </ul>
+    </div>
+    <div class="tab-content-wrapper">
+        <div id="tab1" class="tab-content" style="display:none;">
+            <div class="row">
+                <div class="col-md-4">
+                    <form id="CompanyForm" name="CompanyForm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="EmailAddress" class="control-label"></label>
+                            <input asp-for="EmailAddress" class="form-control" id="CompEmailAddress" />
+                            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" class="form-control" type="password" id="CompPassword" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group" style="padding-top:15px;">
+                            <input type="submit" value="Sign In" class="btn btn-primary" onclick="" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="tab2" class="tab-content" style="display:none;">
+            <div class="row">
+                <div class="col-md-4">
+                    <form id="CollegeForm" name="CollegeForm">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="EmailAddress" class="control-label"></label>
+                            <input asp-for="EmailAddress" class="form-control" id="CollEmailAddress" />
+                            <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Password" class="control-label"></label>
+                            <input asp-for="Password" class="form-control" type="password" id="CollPassword" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="form-group" style="padding-top:15px;">
+                            <input type="submit" value="Sign In" class="btn btn-primary" onclick="" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     var apiurl = 'https://localhost:7128/api/Login/GetLoginDetails';
     $(document).ready(function () {
@@ -156,65 +213,6 @@
         })
     })
 </script>
-<h1>Login</h1>
-<hr />
-<div class="tabs">
-    <div class="tab-nav-wrapper">
-        <ul>
-            <li class="active"><a href="#tab1">Company </a></li>
-            <li><a href="#tab2">College</a></li>
-        </ul>
-    </div>
-    <div class="tab-content-wrapper">
-        <div id="tab1" class="tab-content" style="display:none;">
-            <div class="row">
-                <div class="col-md-4">
-                    <form id="CompanyForm" name="CompanyForm">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="EmailAddress" class="control-label"></label>
-                            <input asp-for="EmailAddress" class="form-control" id="CompEmailAddress" />
-                            <span asp-validation-for="EmailAddress" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Password" class="control-label"></label>
-                            <input asp-for="Password" class="form-control" type="password" id="CompPassword" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        <div class="form-group" style="padding-top:15px;">
-                            <input type="submit" value="Sign In" class="btn btn-primary" onclick="" />
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <div id="tab2" class="tab-content" style="display:none;">
-            <div class="row">
-                <div class="col-md-4">
-                    <form id="CollegeForm" name="CollegeForm">
-                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                        <div class="form-group">
-                            <label asp-for="EmailAddress" class="control-label"></label>
-                            <input asp-for="EmailAddress" class="form-control" id="CollEmailAddress" />
-                            <span asp-validation-for="EmailAddress" class="text-danger"></span>
-                        </div>
-                        <div class="form-group">
-                            <label asp-for="Password" class="control-label"></label>
-                            <input asp-for="Password" class="form-control" type="password" id="CollPassword" />
-                            <span asp-validation-for="Password" class="text-danger"></span>
-                        </div>
-                        <div class="form-group" style="padding-top:15px;">
-                            <input type="submit" value="Sign In" class="btn btn-primary" onclick="" />
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
 
 @section Scripts {
     @{
