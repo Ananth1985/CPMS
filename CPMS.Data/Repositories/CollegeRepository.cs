@@ -1,11 +1,6 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using CPMS.Contracts.Models;
 
@@ -98,6 +93,55 @@ namespace CPMS.Data.Repositories
                     student.Country = Convert.ToString(reader["Country"]);
                     student.CreatedBy = Convert.ToInt32(reader["CreatedBy"]);
                     student.CreatedDate = (reader["CreatedDate"]) != DBNull.Value ? Convert.ToDateTime(reader["CreatedDate"]) : null;                 
+                    students.Add(student);
+                }
+            }
+            else
+            {
+                sqlConnection.Close();
+                var jsonErrorString = JsonConvert.SerializeObject("Student Not Found.");
+                return jsonErrorString;
+            }
+            sqlConnection.Close();
+            var jsonString = JsonConvert.SerializeObject(students, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            return jsonString;
+        }
+
+        public string GetStudentDetailsByCollegeId(int collegeId)
+        {
+            List<Student> students = new List<Student>();
+            using var sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+            using var command = new SqlCommand("GetStudentDetailsByCollegeId", sqlConnection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@CollegeId", SqlDbType.Int).Value = collegeId;
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    Student student = new Student();
+                    student.StudentId = Convert.ToInt32(reader["StudentId"]);
+                    student.CollegeId = Convert.ToInt32(reader["CollegeId"]);
+                    student.CollegeName = Convert.ToString(reader["CollegeName"]);
+                    student.FirstName = Convert.ToString(reader["FirstName"]);
+                    student.MiddleName = Convert.ToString(reader["MiddleName"]);
+                    student.LastName = Convert.ToString(reader["LastName"]);
+                    student.Email = Convert.ToString(reader["Email"]);
+                    student.GenderId = Convert.ToInt32(reader["GenderId"]);
+                    student.Gender = Convert.ToString(reader["GenderName"]);
+                    student.CGPA = Convert.ToDecimal(reader["CGPA"]);
+                    student.NoofArrears = Convert.ToInt32(reader["NoofArrears"]);
+                    student.DepartmentId = Convert.ToInt32(reader["DepartmentId"]);
+                    student.DepartmentName = Convert.ToString(reader["DepartmentName"]);
+                    student.PhoneNumber = Convert.ToString(reader["PhoneNumber"]);
+                    student.Address = Convert.ToString(reader["Address"]);
+                    student.State = Convert.ToString(reader["State"]);
+                    student.City = Convert.ToString(reader["City"]);
+                    student.Pincode = Convert.ToString(reader["Pincode"]);
+                    student.Country = Convert.ToString(reader["Country"]);
+                    student.CreatedBy = Convert.ToInt32(reader["CreatedBy"]);
+                    student.CreatedDate = (reader["CreatedDate"]) != DBNull.Value ? Convert.ToDateTime(reader["CreatedDate"]) : null;
                     students.Add(student);
                 }
             }

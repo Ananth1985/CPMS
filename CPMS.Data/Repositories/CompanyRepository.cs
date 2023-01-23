@@ -1,14 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CPMS.Contracts.Models;
-using System.Diagnostics.Metrics;
 
 namespace CPMS.Data.Repositories
 {
@@ -63,6 +57,71 @@ namespace CPMS.Data.Repositories
             sqlConnection.Close();
             var jsonString = JsonConvert.SerializeObject(companys, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
             return jsonString;
+        }
+
+        public string GetPlacementRequestByCollegeId(int collegeId)
+        {
+            List<PlacementRequest> placementRequests = new List<PlacementRequest>();
+            using var sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+            using var command = new SqlCommand("GetPlacementRequestByCollegeId", sqlConnection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@CollegeId", SqlDbType.Int).Value = collegeId;
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    PlacementRequest placementRequest = new PlacementRequest();
+                    placementRequest.PlacementRequestId = Convert.ToInt32(reader["PlacementRequestId"]);
+                    placementRequest.CollegeId = Convert.ToInt32(reader["CollegeId"]);
+                    placementRequest.CollegeName = Convert.ToString(reader["CollegeName"]);
+                    placementRequest.CompanyId = Convert.ToInt32(reader["CompanyId"]);
+                    placementRequest.CompanyName = Convert.ToString(reader["CompanyName"]);
+                    placementRequest.RequestedDate = (reader["RequestedDate"]) != DBNull.Value ? Convert.ToDateTime(reader["RequestedDate"]) : null;
+                    placementRequest.CreatedDate = (reader["CreatedDate"]) != DBNull.Value ? Convert.ToDateTime(reader["CreatedDate"]) : null;
+                    placementRequest.CreatedBy = Convert.ToInt32(reader["CreatedBy"]);
+                    placementRequest.PlacementDetails = GetPlacementRequestDetailsByPlacementRequestId(placementRequest.PlacementRequestId);
+                    placementRequests.Add(placementRequest);
+                }
+            }
+            else
+            {
+                sqlConnection.Close();
+                var jsonErrorString = JsonConvert.SerializeObject("Student Not Found.");
+                return jsonErrorString;
+            }
+            sqlConnection.Close();
+            var jsonString = JsonConvert.SerializeObject(placementRequests, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            return jsonString;
+        }
+
+        public List<PlacementRequestDetails> GetPlacementRequestDetailsByPlacementRequestId(int placementRequestId)
+        {
+            List<PlacementRequestDetails> placementRequestDetails = new List<PlacementRequestDetails>();
+            using var sqlConnection = new SqlConnection(_connectionString);
+            sqlConnection.Open();
+            using var command = new SqlCommand("GetPlacementRequestDetailsByPlacementRequestId", sqlConnection);
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("@PlacementRequestId", SqlDbType.Int).Value = placementRequestId;
+            SqlDataReader reader = command.ExecuteReader();
+            if (reader.HasRows)
+            {
+                while (reader.Read())
+                {
+                    PlacementRequestDetails placementRequestDetail = new PlacementRequestDetails();
+                    placementRequestDetail.PlacementRequestDetailsId = Convert.ToInt32(reader["PlacementRequestDetailsId"]);
+                    placementRequestDetail.DepartmentId = Convert.ToInt32(reader["DepartmentId"]);
+                    placementRequestDetail.DepartmentName = Convert.ToString(reader["DepartmentName"]);
+                    placementRequestDetail.CGPA = Convert.ToDecimal(reader["CGPA"]);
+                    placementRequestDetail.Arrears = Convert.ToInt32(reader["Arrears"]);
+                    placementRequestDetail.CreatedDate = (reader["CreatedDate"]) != DBNull.Value ? Convert.ToDateTime(reader["CreatedDate"]) : null;
+                    placementRequestDetail.CreatedBy = Convert.ToInt32(reader["CreatedBy"]);
+                    placementRequestDetails.Add(placementRequestDetail);
+                }
+            }
+            sqlConnection.Close();
+            return placementRequestDetails;
         }
 
         public string InsertPlacementRequest(PlacementRequest placementRequest)

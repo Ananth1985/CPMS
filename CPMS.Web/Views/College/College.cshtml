@@ -1,0 +1,89 @@
+﻿@model CPMS.Web.Models.Student
+
+@{
+    ViewData["Title"] = "College";
+    var students = ViewData["Students"] as List<CPMS.Web.Models.Student>;
+}
+
+<h1>@ViewBag.CollegeName</h1>
+
+<div>
+    <table id="Student" class="table table-striped table-bordered table-sm table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th Style="text-align: center;" >#</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Last Name</th>
+                <th>Gender</th>
+                <th>Department</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < students.Count; i++)
+            {
+            <tr>
+                <td Style="text-align: center;" >
+                    <img src="~/Images/plus.png" style="width:1em; height:1em;" />
+                    <div style="display:none">
+                        <table>
+                            <tr>
+                                <td>Email</td>
+                                <td></td>
+                                <td>:</td>
+                                <td></td>
+                                <td>@Html.DisplayFor(modelItem => @students[i].Email)</td>
+                            </tr>
+                            <tr>
+                                <td>Phone Number</td>
+                                <td></td>
+                                <td>:</td>
+                                <td></td>
+                                <td>@Html.DisplayFor(modelItem => @students[i].PhoneNumber)</td>
+                            </tr>
+                            <tr>
+                                <td>CGPA</td>
+                                <td></td>
+                                <td>:</td>
+                                <td></td>
+                                <td>@Html.DisplayFor(modelItem => @students[i].CGPA)</td>
+                            </tr>
+                            <tr>
+                                <td>No of Arrears</td>
+                                <td></td>
+                                <td>:</td>
+                                <td></td>
+                                <td>@Html.DisplayFor(modelItem => @students[i].NoofArrears)</td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+                <td Style="text-align: center;" >@(i + 1)</td>
+                <td>@Html.DisplayFor(modelItem => @students[i].FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => @students[i].MiddleName)</td>
+                <td>@Html.DisplayFor(modelItem => @students[i].LastName)</td>
+                <td>@Html.DisplayFor(modelItem => @students[i].Gender)</td>
+                <td>@Html.DisplayFor(modelItem => @students[i].DepartmentName)</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $("#Student").on("click", "img[src*='plus.png']", function () {
+        $(this).closest("tr").after("<tr><td></td><td colspan ='999'>" + $(this).next().html() + "</td></tr>");
+        $(this).attr("src", "/images/minus.png");
+    });
+    $("#Student").on("click", "img[src*='minus.png']", function () {
+        $(this).attr("src", "/images/plus.png");
+        $(this).closest("tr").next().remove();
+    });
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
