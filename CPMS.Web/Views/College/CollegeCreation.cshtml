@@ -9,13 +9,8 @@
 
 <div class="row">
     <div class="col-md-4">
-        <form id="CollegeForm" name="CollegeForm">
+        <form id="CollegeCreation" name="CollegeForm">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group" hidden>
-                <label asp-for="CollegeId" class="control-label"></label>
-                <input asp-for="CollegeId" class="form-control" />
-                <span asp-validation-for="CollegeId" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="CollegeName" class="control-label"></label>
                 <input asp-for="CollegeName" class="form-control" id="CollegeName" />
@@ -61,6 +56,10 @@
                 <input asp-for="Pincode" class="form-control" id="Pincode" />
                 <span asp-validation-for="Pincode" class="text-danger"></span>
             </div>
+            <div class="form-group" hidden>
+                <input class="form-control" id="CreatedBy" value="@ViewBag.CreatedBy" type="hidden" />
+                <span class="text-danger"></span>
+            </div>
             <div class="form-group" style="padding-top:15px;">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -69,11 +68,12 @@
 </div>
 
 <script type="text/javascript">
+    var apiUrl = "https://localhost:7128/api/College/InsertCollegeDetails";
     $(document).ready(function () {
-        $('#CollegeForm').submit(function (e) {
+        $('#CollegeCreation').submit(function (e) {
             e.preventDefault();
             var data = {
-                CompanyName: $('#CollegeName').val().trim(),
+                CollegeName: $('#CollegeName').val().trim(),
                 Email: $('#Email').val().trim(),
                 PhoneNumber: $('#PhoneNumber').val().trim(),
                 Fax: $('#FaxNumber').val().trim(),
@@ -82,19 +82,21 @@
                 City: $('#City').val().trim(),
                 Country: $('#Country').val().trim(),
                 Pincode: $('#Pincode').val().trim(),
+                CreatedBy: $('#CreatedBy').val().trim()
             };
-            alert(data);
             $.ajax({
-                url: apiurl,
-                type: 'post',
-                dataType: 'json',
-                data: data,
+                url: apiUrl,
+                type: 'Post',
+                contentType: 'application/json; charset=utf-8',
+
+                data: JSON.stringify(data),
                 success: function (result) {
-                    alert('successfully received data ');
+                    alert('New College successfully Created.');
                     console.log(result);
+                    $('#CollegeCreation').trigger("reset");
                 },
                 error: function () {
-                    alert('failed to receive the data');
+                    alert('failed to insert data');
                     console.log('failed ');
                 }
             })

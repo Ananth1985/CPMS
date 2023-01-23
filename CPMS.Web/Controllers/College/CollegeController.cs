@@ -7,7 +7,17 @@ namespace CPMS.Web.Controllers.College
     {
         public IActionResult CollegeCreation()
         {
-            return View();
+            if (HttpContext.Session.GetString("IsLoggedIn") == "true")
+            {
+                ViewBag.CreatedBy = HttpContext.Session.GetString("LoggedInUserId");
+                return View();
+            }
+            else
+            {
+                return View("../Login/Login");
+            }
+
+
         }
 
         public IActionResult College()
