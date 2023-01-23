@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Login";
 }
-@Html.Hidden("CompanyURL", Url.Action("CompanyLandingPage", "Company"))
+@Html.Hidden("CompanyURL", Url.Action("Company", "Company"))
 @Html.Hidden("CollegeURL", Url.Action("College", "College"))
 <style>
     .tabs {

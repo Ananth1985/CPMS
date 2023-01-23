@@ -42,11 +42,12 @@ namespace CPMS.Web.Controllers.Company
 
         }
 
-        public IActionResult CompanyLandingPage()
+        public IActionResult Company()
         {
             if (HttpContext.Session.GetString("IsLoggedIn") == "true")
             {
-                return View();
+                ViewBag.CompanyName = HttpContext.Session.GetString("LoggedInUserConcernName");
+                return View("Company");
             }
             else
             {
