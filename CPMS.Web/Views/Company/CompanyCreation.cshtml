@@ -1,21 +1,45 @@
 ﻿@model CPMS.Web.Models.Company
-
 @{
     ViewData["Title"] = "Company";
-}
+}<script type="text/javascript">
+     var apiUrl = "https://localhost:7128/api/Company/InsertCompanyDetails";
+     $(document).ready(function () {
+         $('#CompanyCreation').submit(function (e) {
+             e.preventDefault();
+             var data = {
+                 CompanyName: $('#CompanyName').val().trim(),
+                 Email: $('#Email').val().trim(),
+                 PhoneNumber: $('#PhoneNumber').val().trim(),
+                 Fax: $('#FaxNumber').val().trim(),
+                 Address: $('#Address').val().trim(),
+                 State: $('#State').val().trim(),
+                 City: $('#City').val().trim(),
+                 Country: $('#Country').val().trim(),
+                 Pincode: $('#Pincode').val().trim(),
+                 CreatedBy: $('#CreatedBy').val().trim()
+             };
+             $.ajax({
+                 url: apiUrl,
+                 type: 'Post',
+                 contentType: 'application/json; charset=utf-8',
 
+                 data: JSON.stringify(data),
+                 success: function (result) {
+                     alert('New company successfully inserted.');
+                     $('#CompanyCreation').trigger("reset");
+                 },
+                 error: function () {
+                     alert('failed to insert data');
+                 }
+             })
+         })
+     })</script>
 <h1>Company Registration</h1>
-
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Index" id="CompanyForm" name="CompanyForm">
+        <form id="CompanyCreation" name="CompanyCreation">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group" hidden>
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="CompanyName" class="control-label"></label>
                 <input asp-for="CompanyName" class="form-control" id="CompanyName" />
@@ -36,8 +60,8 @@
                 <input asp-for="FaxNumber" class="form-control" id="FaxNumber" />
                 <span asp-validation-for="FaxNumber" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Address" class="control-label"></label>
+            <div class="form-group"><
+                label asp-for="Address" class="control-label"></label>
                 <input asp-for="Address" class="form-control" id="Address" />
                 <span asp-validation-for="Address" class="text-danger"></span>
             </div>
@@ -61,45 +85,18 @@
                 <input asp-for="Pincode" class="form-control" id="Pincode" />
                 <span asp-validation-for="Pincode" class="text-danger"></span>
             </div>
+            <div class="form-group" hidden>
+                <input class="form-control" id="CreatedBy" value="@ViewBag.CreatedBy" type="hidden" />
+                <span class="text-danger"></span>
+                </div>
             <div class="form-group" style="padding-top:15px;">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#CompanyForm').submit(function (e) {
-            e.preventDefault();
-            var data = {
-                CompanyName: $('#CompanyName').val().trim(),
-                Email: $('#Email').val().trim(),
-                PhoneNumber: $('#PhoneNumber').val().trim(),
-                Fax: $('#FaxNumber').val().trim(),
-                Address: $('#Address').val().trim(),
-                State: $('#State').val().trim(),
-                City: $('#City').val().trim(),
-                Country: $('#Country').val().trim(),
-                Pincode: $('#Pincode').val().trim(),
-            };
-            $.ajax({
-                url: apiurl,
-                type: 'post',
-                dataType: 'json',
-                data: data,
-                success: function (result) {
-                    console.log(result);
-                },
-                error: function () {
-                    alert('failed to receive the data');
-                    console.log('failed ');
-                }
-            })
-        })
-    })
-</script>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
